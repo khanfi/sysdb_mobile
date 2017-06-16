@@ -15,7 +15,8 @@ var mainView = myApp.addView('.view-main', {
 });
 
 var BaseURLWeb = "http://ndewebtest/voii.mobileapptest/api/sysdbmobile/"; // web
-var BaseURLApp = "https://mobileapps.voith.com/voithmobileapi/sys/api/sysdbmobile/"; //mobile 
+var BaseURLApp = "https://dev-mobileapps.voith.com/voii.mobileapptest/api/sysdbmobile/"; //mobile test
+//var BaseURLApp = "https://mobileapps.voith.com/voithmobileapi/sys/api/sysdbmobile/"; //mobile prod
 var ENV = "APP"; //Switch between mobile app and web app (Set for web:WEB and mobile:APP)
 
 var CurrentUser = {
