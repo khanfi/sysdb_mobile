@@ -1,0 +1,374 @@
+/* Your app custom files in this file */
+/* Tab bar icons */
+/*textarea {
+    min-height: 60px !important;
+    overflow-y: auto !important;
+    word-wrap: break-word !important;
+}*/
+
+i.toolbar-demo-icon-moveto-inline {
+    width: 24px;
+    height: 24px;
+    background-image: url("../img/moveto.png");
+}
+
+i.toolbar-demo-icon-view-inline {
+    width: 24px;
+    height: 24px;
+    background-image: url("../img/ic_search.png");
+}
+
+i.toolbar-demo-icon-like-inline {
+    width: 20px;
+    height: 20px;
+    background-image: url(../img/ic_thumb_up.png);
+}
+
+i.toolbar-demo-icon-whiteStar-inline {
+    width: 18px;
+    height: 18px;
+    padding: -5px 0px 0px -15px;
+    background-image: url(../img/white_star.png);
+}
+
+i.toolbar-demo-icon-yellowStar-inline {
+    width: 18px;
+    height: 18px;
+    padding: -5px 0px 0px -15px;
+    background-image: url(../img/yellow_star.png);
+}
+
+i.toolbar-demo-icon-adduser {
+    width: 25px;
+    height: 25px;
+    background-image: url("../img/ic_person_add_white.png");
+}
+
+i.toolbar-demo-icon-lock {
+    width: 25px;
+    height: 25px;
+    background-image: url("../img/ic_lock_outline_white.png");
+}
+
+i.toolbar-demo-icon-edit {
+    width: 30px;
+    height: 30px;
+    background-image: url("../img/ic_edit.png");
+}
+
+i.toolbar-demo-icon-refresh {
+    width: 24px;
+    height: 24px;
+    background-image: url("../img/ic_refresh.png");
+}
+
+i.toolbar-demo-icon-logoff {
+    width: 24px;
+    height: 24px;
+    background-image: url("../img/ic_perm_identity.png");
+}
+
+i.toolbar-demo-icon-save {
+    width: 24px;
+    height: 24px;
+    background-image: url("../img/ic_save.png");
+}
+
+.active i.toolbar-demo-icon-save {
+    width: 24px;
+    height: 24px;
+    background-image: url("../img/ic_save.png");
+}
+
+i.toolbar-demo-icon-add {
+    width: 24px;
+    height: 24px;
+    background-image: url("../img/ic_add_box.png");
+}
+
+.active i.toolbar-demo-icon-add {
+    width: 24px;
+    height: 24px;
+    background-image: url("../img/ic_add_box.png");
+}
+
+i.toolbar-demo-icon-dashboard {
+    width: 24px;
+    height: 24px;
+    background-image: url("../img/ic_home.png");
+}
+
+.active i.toolbar-demo-icon-dashboard {
+    width: 24px;
+    height: 24px;
+    background-image: url("../img/ic_home.png");
+}
+
+.toolbar-demo-icon-like {
+    width: 24px;
+    height: 24px;
+    background-image: url("../img/ic_thumb_up.png");
+}
+
+.active i.toolbar-demo-icon-like {
+    width: 30px;
+    height: 30px;
+    background-image: url("../img/ic_thumb_up.png");
+}
+/* End Tab bar icons */
+.icon-default {
+    width: 22px;
+    height: 22px;
+    background-image: url(../img/icon-default.png);
+    border-radius: 6px;
+}
+
+.icon-like {
+    width: 15px;
+    height: 15px;
+    background-image: url(../img/ic_thumb_up.png);
+}
+
+.num-like {
+    padding: 0px 5px;
+    font-size: 12pt;
+    line-height: 20px;
+}
+
+.opex-input-label {
+    padding: 5px 0px 0px 15px;
+    margin: 0px;
+    font-size: 12px;
+}
+
+.color-voith-blue {
+    color: #2d4275;
+    margin: 2px;
+}
+
+.item-title .color-voith-blue {
+    font-size: 15px;
+}
+
+.issue-status {
+    font-size: 10pt;
+    padding: 2px 5px;
+    background-color: #efefef;
+    border-radius: 10px;
+}
+
+.issue-likes {
+    font-size: 10pt;
+    line-height: 16px;
+    padding: 1px 5px;
+    background-color: #ccc;
+    border-radius: 8px;
+    color: #900;
+}
+
+.voith-logo {
+    color: #009;
+}
+
+.voith-logo-sep {
+    color: #000;
+    padding: 0px 5px;
+    font-weight: bold;
+}
+
+.voith-logo-app {
+    color: #000;
+}
+
+textarea {
+    position: relative;
+    float: right;
+    word-wrap: hyphenate;
+    ruby-position: right;
+}
+
+/*Overrite CSS*/
+.list-block {
+    margin-top: 12px;
+}
+
+.content-block-title {
+    margin-top: 12px;
+}
+
+.app-title {
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 28px !important;
+    color: #2d4275;
+    font-family: HelveticaNeue-Light,"Helvetica Neue Light","Helvetica Neue",sans-serif;
+}
+
+.dashboard {
+    padding-top: 10px;
+}
+
+.dashboard-item {
+    height: 100px;
+    text-align: center;
+    margin: 10px;
+    padding: 10px 0px;
+}
+
+    .dashboard-item span {
+        text-transform: uppercase;
+        font-size: 11px;
+    }
+
+    .dashboard-item .icon-products {
+        width: 72px;
+        height: 72px;
+        background-image: url('../img/ic_dvr_3x.png');
+    }
+
+    .dashboard-item .icon-issues {
+        width: 72px;
+        height: 72px;
+        background-image: url('../img/ic_view_list_3x.png');
+    }
+
+    .dashboard-item .icon-feedback {
+        width: 72px;
+        height: 72px;
+        background-image: url('../img/ic_feedback_3x.png');
+    }
+
+    .dashboard-item .icon-likes {
+        width: 72px;
+        height: 72px;
+        background-image: url('../img/ic_thumbs_up_down_3x.png');
+    }
+
+.padding-left5 {
+    padding-left: 5px !important;
+}
+
+.padding-zero {
+    padding-top: 0px !important;
+}
+
+    .padding-zero .list-block {
+        margin-top: 0px !important;
+    }
+
+.content-center {
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.bg-lightgray {
+    background-color: #fff;
+    border-bottom: 1px solid #aaa;
+}
+
+.Date11 {
+    font-size: 11px;
+    color: #000 !important;
+}
+
+.Date13 {
+    font-size: 13px;
+    color: #000 !important;
+}
+
+.font13 {
+    font-size: 13px !important;
+}
+
+.font12 {
+    font-size: 12px !important;
+}
+
+.font11 {
+    font-size: 11px !important;
+}
+
+.font10 {
+    font-size: 10px !important;
+}
+
+.color666 {
+    color: #666 !important;
+}
+
+.list-discription-right {
+    font-size: 11px !important;
+    color: #666;
+}
+
+
+.zero-bottom {
+    margin-bottom: 0px !important;
+    padding-bottom: 0px !important;
+}
+
+.even {
+    background-color: #f9f8fd !important;
+}
+
+.odd {
+    background-color: #fff !important;
+}
+
+.no-border {
+    border: 0px none !important;
+}
+
+.bg-transparent {
+    background-color: transparent !important;
+}
+
+.vertical-seprator {
+    margin-left: 5px;
+    margin-right: 5px;
+    border-left: 1px solid gray;
+}
+
+.vertical-seprator-icons {
+    margin: 4px 5px 0px 5px;
+    border-left: 1px solid gray;
+    max-height: 20px;
+}
+
+.form-header {
+    margin: 0px !important;
+    padding: 10px !important;
+    color: black !important;
+    font-size: 15px !important;
+    text-transform: none;
+}
+
+.no-margin-top {
+    margin-top: 0px !important;
+}
+
+.no-margin-bottom {
+    margin-bottom: 0px !important;
+}
+
+.no-paddding-top {
+    padding-top: 0px !important;
+}
+
+.no-paddding-bottom {
+    padding-bottom: 0px !important;
+}
+
+.vcon-page-header {
+    font-family: HelveticaNeue-Light,"Helvetica Neue Light","Helvetica Neue",sans-serif !important;
+    color: #2d4275 !important;
+    font-size: 22px !important;
+    font-weight: normal !important;
+}
+
+.back span {
+    color: #2d4275 !important;
+}
+
+/*Overrite CSS*/
+

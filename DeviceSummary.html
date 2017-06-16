@@ -1,0 +1,37 @@
+<!-- We don't need full layout here, because this page will be parsed with Ajax-->
+<!-- Top Navbar-->
+<div class="navbar">
+    <div class="navbar-inner">
+        <div class="left"><a href="#" class="back link"> <i class="icon icon-back"></i><span>Back</span></a></div>
+        <div class="center sliding">Devices</div>
+        <div class="right">
+            <!--<a href="#" id="openLeftPanelLink" class="link icon-only open-panel"> <i class="icon icon-bars"></i></a>-->
+            <img src="img/Voith_logotype.png" style="height: 20px;" />
+        </div>
+    </div>
+</div>
+<div class="pages">
+    <!-- Page, data-page contains page name-->
+    <div data-page="DeviceSummary" class="page">
+        <!-- Search Bar -->
+        <form data-search-list=".list-block-search" data-search-in=".item-title" class="searchbar searchbar-init">
+            <div class="searchbar-input">
+                <input type="search" placeholder="Search">
+            </div><a href="#" class="searchbar-cancel">Cancel</a>
+        </form>
+        <!-- Search Bar overlay -->
+        <div class="searchbar-overlay"></div>
+
+        <!-- Scrollable page content-->
+        <div class="page-content">
+            <!-- This block will be displayed if nothing found -->
+            <div class="content-block searchbar-not-found">
+                <div class="content-block-inner">Nothing found</div>
+            </div>
+            <!-- This block will be displayed if anything found, and this list block is used a searbar target -->
+            <div class="list-block list-block-search searchbar-found media-list">
+                <ul id="ulDevices"></ul>
+            </div>
+        </div>
+    </div>
+</div>

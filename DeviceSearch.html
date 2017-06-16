@@ -1,0 +1,102 @@
+<!-- We don't need full layout here, because this page will be parsed with Ajax-->
+<!-- Top Navbar-->
+<div class="navbar">
+    <div class="navbar-inner">
+        <div class="left"><a href="#" class="back link"> <i class="icon icon-back"></i><span>Back</span></a></div>
+        <div class="center sliding">Device Search</div>
+        <div class="right">
+            <img src="img/Voith_logotype.png" style="height: 20px;" />
+        </div>
+    </div>
+</div>
+
+<div class="pages">
+    <!-- Page, data-page contains page name-->
+    <div data-page="DeviceSearch" class="page">
+        <!-- Scrollable page content-->
+        <div class="page-content">
+            <form id="my-form" class="list-block">
+                <ul>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-inner">
+                                <div class="item-title label font12">Device Name</div>
+                                <div class="item-input font12">
+                                    <input type="text" placeholder="Name" name="fDeviceName">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-inner">
+                                <div class="item-title label font12">Description</div>
+                                <div class="item-input font12">
+                                    <input type="text" placeholder="Description" name="fDeviceDescription">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-inner">
+                                <div class="item-title label font12">Device Class</div>
+                                <div class="item-input font12">
+                                    <input type="text" placeholder="Class" name="fDeviceClass">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-inner">
+                                <div class="item-title label font12">Device Model</div>
+                                <div class="item-input font12">
+                                    <input type="text" placeholder="Model" name="fDeviceModel">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-inner">
+                                <div class="item-title label font12">Resp.IT Org.</div>
+                                <div class="item-input">
+                                    <input type="text" placeholder="IT Org." name="fITOrg">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-inner">
+                                <div class="item-title label font12">Resp. Admin Team</div>
+                                <div class="item-input font12">
+                                    <input type="text" placeholder="Admin Team" name="fAdminTeam">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <!--class="autocomplete-dropdown-placeholder"-->
+                        <div class="item-content">
+                            <div class="item-inner">
+                                <!--<div class="item-title">{{text}}</div>-->
+                                <div class="item-title label font12">LAN Site</div>
+                                <div class="item-input font12">
+                                    <input type="text" name="fLanSite" placeholder="Lansite" id="autocomplete-dropdown">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </form>
+            
+            <div class="content-block">
+                <!--<input type="button" value="Scan" id="btnBarCodeScanner" onclick="ScanCode();" />-->
+                <a href="DeviceSummary.html?isSearch=true" id="searchForm" class="button form-to-json">Search</a>
+            </div>
+        </div>
+
+    </div>
+</div>
