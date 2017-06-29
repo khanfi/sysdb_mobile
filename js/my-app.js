@@ -295,16 +295,16 @@ function RenderDevices(data) {
     var strHtml = '';
     // for (var i = 0; i < data.length; i++)
     $$.each(data, function (i) {
-        strHtml += '<li >';
-        strHtml += '<a href="DeviceTabs.html?ID=' + data[i]["CI_ID"] + '&Name=' + data[i]["Name"] + '&desc=' + data[i]["Description"] + '">';
+        strHtml += '<li>';
+        strHtml += '<a href="DeviceTabs.html?ID=' + data[i]["CI_ID"] + '&Name=' + data[i]["Name"] + '&desc=' + data[i]["Description"] + '" class="item-link">';
         strHtml += '<div class="item-inner">'
         strHtml += '<div class="item-title-row">'
-        strHtml += '<div class="item-title color-voith-blue">' + data[i]["Name"] + '</div></div>';
-        strHtml += '<div class="item-after font12">' + data[i]["Description"] + '</div>';
+        strHtml += '<div class="item-title color-voith-blue">&nbsp;&nbsp;&nbsp;&nbsp;' + data[i]["Name"] + '</div></div>';
+        strHtml += '<div class="item-after font12">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + data[i]["Description"] + '</div>';
         strHtml += '<div class="item-title-row">'
         strHtml += '<div class="item-subtitle align:left list-discription"></div></div>';
         strHtml += '<div class="item-after font12">';
-        strHtml += '<span class="font11">' + data[i]["Lansite"] + ' </span>';
+        strHtml += '<span class="font11">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + data[i]["Lansite"] + ' </span>';
         strHtml += '<span class="vertical-seprator font10"></span>';
         strHtml += '<span class="font11">' + data[i]["Organization"] + ' </span>';
         strHtml += '<span class="vertical-seprator font10"></span>';
@@ -382,7 +382,7 @@ function RenderTabInfo(data) {
     var strHtml = '';
     for (var i = 0; i < data.length; i++) {
         var obj = data[i];
-        strHtml += '<li class="accordion-item bg-#8e8e93">';
+        strHtml += '<li class="accordion-item">';
         strHtml += ' <a href="#" class="item-content item-link">';
         strHtml += '<div class="item-inner">'
         strHtml += '<div class="item-title">' + obj[0]["Group"] + '</div>';
@@ -396,7 +396,7 @@ function RenderTabInfo(data) {
             strHtml += '<div class="item-content">';
             strHtml += '<div class="item-inner">';
             strHtml += '<div class="item-text label">&nbsp;&nbsp;&nbsp;' + objIterate["FieldTitle"] + '</div>';
-            strHtml += '<div class="item-after">' + objIterate["Value"] + '</div>';
+            strHtml += '<div class="item-subtitle">' + objIterate["Value"] + '</div>';
             //strHtml += '<input type="textarea" value=' + objIterate["Value"] + '></input></div>';
             //+ objIterate["Value"] + '</div>';
             strHtml += '</div>';
