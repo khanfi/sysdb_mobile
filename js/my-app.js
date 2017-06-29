@@ -107,12 +107,12 @@ function GetDataAndRender(urlAddress, fnRenderData, Arg1) {
 
                     if (!navigator.onLine) {
                         myApp.alert(APP_MESSAGE.NetworkNotAbailable);
-                    } else {
+    } else {
                         myApp.alert(status + error);
-                    }
+}
                 }
             });
-        }
+                }
     } else {
         alert(APP_MESSAGE.NetworkNotAbailable);
     }

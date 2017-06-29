@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<widget xmlns="http://www.w3.org/ns/widgets"
-        xmlns:gap="http://phonegap.com/ns/1.0"
-        id="com.voith.dsi.sysdb"
+<widget xmlns="http://www.w3.org/ns/widgets" 
+        xmlns:gap="http://phonegap.com/ns/1.0" 
+        id="com.voith.dsi.sysdb" 
         version="1.0">
-
+  
   <name>SysDB</name>
   <description>System Database (SysDB), Voith Digital Solutions</description>
   <author href="http://www.voith.com" email="firoz.khan@voith.com">Voith Digital Solutions</author>
