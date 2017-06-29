@@ -1,12 +1,12 @@
+// Export selectors engine
+var $$ = Dom7;
+
 // Initialize your app
 var myApp = new Framework7({
-    modalTitle: 'Framework7',
+    modalTitle: 'SysDB Mobile',
     animateNavBackIcon: false,
     preloadPreviousPage: false,
 });
-
-// Export selectors engine
-var $$ = Dom7;
 
 // Add main View
 var mainView = myApp.addView('.view-main', {
@@ -14,100 +14,107 @@ var mainView = myApp.addView('.view-main', {
     dynamicNavbar: true,
 });
 
-var BaseURLWeb = "http://ndewebtest/voii.mobileapptest/api/sysdbmobile/"; // web
-var BaseURLApp = "https://mobileapps.voith.com/voithmobileapi/sys/api/sysdbmobile/"; //mobile 
+//var BaseURLWeb = "http://ndewebtest/voii.mobileapptest/api/sysdbmobile/"; // web
+var BaseURLWeb = "https://vpvitterdevcon.voith.net/api/sysdbmobile/"; //vpn
+var BaseURLApp = "https://vpvitterdevconvpn.voith.net/api/sysdbmobile/"; //vpn mobile test
+//var BaseURLApp = "https://dev-mobileapps.voith.com/voii.mobileapptest/api/sysdbmobile/"; //mobile test
+//var BaseURLApp = "https://mobileapps.voith.com/voithmobileapi/sys/api/sysdbmobile/"; //mobile prod
 var ENV = "APP"; //Switch between mobile app and web app (Set for web:WEB and mobile:APP)
 
-var CurrentUser = {
-    get UserID() { return Number(localStorage.getItem("cUser")); }
-};
+if (ENV != "APP" && (myApp.device.iphone || myApp.device.ipad || myApp.device.android)) {
+    ENV = "APP";
+}
+
+/*
+Local Store Keys
+*/
+var APP_KEY = 'sysdb';
+var APP_PROFILE = new Object();
+APP_PROFILE.CurrentUser = APP_KEY + "_cUser";
+APP_PROFILE.WindowsUser = APP_KEY + "_wUser";
+APP_PROFILE.WindowsPass = APP_KEY + "_wPass";
+
+var APP_MESSAGE = new Object();
+APP_MESSAGE.NetworkNotAbailable = "Network is not available.";
+APP_MESSAGE.LoginFailed = "Login failed.";
+
+function getCurrentUser() {
+    var cUser = localStorage.getItem(APP_PROFILE.CurrentUser);
+    if (cUser != null && cUser != "") {
+        var oUser = JSON.parse(cUser);
+        return oUser;
+    }
+    else {
+        cUser = new Object();
+        cUser.UserID = 0;
+    }
+    return cUser;
+}
+
+var CurrentUser = getCurrentUser();
 
 function GetDataAndRender(urlAddress, fnRenderData, Arg1) {
+    myApp.showIndicator();
+    //if (sLocalStoreKey != null && localStorage.getItem(sLocalStoreKey) != null && localStorage.getItem(sLocalStoreKey) != '') {
+    //    var result = JSON.parse(localStorage.getItem(sLocalStoreKey));
+    //    fnRenderData(result, Arg1);
+    //    myApp.hideIndicator();
+    //}
     if (navigator.onLine) {
-        myApp.showIndicator();
-        if (ENV == "WEB") {
-            $$.ajax({
+        //if (ENV == "WEB") {
+        //    $$.ajax({
+        //        url: urlAddress,
+        //        type: "GET",
+        //        dataType: 'json',
+        //        success: function (result) {
+        //            ////Save to Local Store
+        //            //if (sLocalStoreKey != null)
+        //            //    localStorage.setItem(sLocalStoreKey, JSON.stringify(result));
+
+        //            fnRenderData(result, Arg1);
+        //            myApp.hideIndicator();
+        //        },
+        //        error: function (xhr, status, error) {
+        //            myApp.hideIndicator();
+
+        //            if (!navigator.onLine) {
+        //                myApp.alert(APP_MESSAGE.NetworkNotAbailable);
+        //            } else {
+        //                var err = eval("(" + xhr.responseText + ")");
+        //                myApp.alert(err.Message);
+        //            }
+        //        }
+        //    });
+        //} else
+        {
+            $.ajax({
+                username: localStorage.getItem(APP_PROFILE.WindowsUser),
+                password: localStorage.getItem(APP_PROFILE.WindowsPass),
+                async: true,
+                crossDomain: true,
                 url: urlAddress,
                 type: "GET",
                 dataType: 'json',
                 success: function (result) {
-                    myApp.hideIndicator();
+                    ////Save to Local Store
+                    //if (sLocalStoreKey != null)
+                    //    localStorage.setItem(sLocalStoreKey, JSON.stringify(result));
                     fnRenderData(result, Arg1);
+                    myApp.hideIndicator();
                 },
                 error: function (xhr, status, error) {
                     myApp.hideIndicator();
-                    //var err = eval("(" + xhr.status + ")");
-                    alert(xhr.status + ' ' + xhr.statusText + '\n'+ urlAddress);
+
+                    if (!navigator.onLine) {
+                        myApp.alert(APP_MESSAGE.NetworkNotAbailable);
+                    } else {
+                        myApp.alert(status + error);
+                    }
                 }
             });
-        } else {
-            function httpRequest(methodType, urlAddress, resultType) {
-                // success	
-                //alert("Coredova : " + urlAddress);
-                cordova.exec(function (statusCode, headers, data) {
-                    myApp.hideIndicator();
-                    fnRenderData(JSON.parse(data), Arg1);
-
-                },
-                // on error
-               function (errorText) { myApp.alert("VIAAPlugin Get:" + errorText); },
-                "VIAAPlugin",
-                "dataRequest", [methodType, urlAddress, resultType]);
-            }
-            httpRequest("GET", urlAddress, "string");
         }
     } else {
-        alert("No network available.");
-    }
-}
-
-function PostDataAndRender(urlAddress, fnRenderData, oPostData, Arg1) {
-    if (navigator.onLine) {
-        myApp.showIndicator();
-        var strPostData = JSON.stringify(oPostData);
-        if (ENV == "WEB") {
-            $$.ajax({
-                url: urlAddress,
-                type: "POST",
-                data: strPostData,
-                success: function (result) {
-                    myApp.hideIndicator();
-                    fnRenderData(JSON.parse(result), Arg1);
-                },
-                error: function (xhr, status, error) {
-                    myApp.hideIndicator();
-                    var err = eval("(" + xhr.responseText + ")");
-                    myApp.alert(err.Message, 'sysDB');
-                }
-            });
-        } else {
-            function httpPostRequest(methodType, urlAddress, resultType, strPostData) {
-                try {
-
-                    cordova.exec(function (statusCode, headers, data, strPostData) {
-                        myApp.hideIndicator();
-                        fnRenderData(JSON.parse(data));
-                    },
-
-                    // on error
-                    function (errorText) {
-                        myApp.alert("VIAAPlugin Post:" + errorText);
-                        myApp.hideIndicator();
-                    },
-                    "VIAAPlugin",
-                    "dataRequest",
-                    [methodType, urlAddress, resultType, strPostData]);
-                    //[methodType, urlAddress, resultType, strPostData, { "Content-Type": "application/json" }]);
-                }
-                catch (ex) {
-                    myApp.hideIndicator();
-                    myApp.alert("cordova.exec : " + ex.message);
-                }
-            }
-            httpPostRequest("POST", urlAddress, "string", strPostData);
-        }
-    } else {
-        alert("No network available.");
+        alert(APP_MESSAGE.NetworkNotAbailable);
     }
 }
 
@@ -125,56 +132,85 @@ if (ENV == "WEB") {
     myApp.onPageInit('index', function (e) {
         if (typeof e != 'undefined' && e.from == "left")
             return;
-        localStorage.setItem("cUser", '');
-        var cUserID = localStorage.getItem("cUser");
+        localStorage.setItem(APP_PROFILE.CurrentUser, '');
+        var cUserID = localStorage.getItem(APP_PROFILE.CurrentUser).UserID;
         if (cUserID == null || cUserID == '' || Number(cUserID) <= 0) {
             function RenderAfterLogin(result) {
-                //Load Data
                 if (result != null && result.UserID != null && Number(result.UserID) > 0) {
-                    //myApp.closeModal('.login-screen');
-                    //$$("#certURL").val('').attr("placeholder", "Voith Email ID");
-                    //$$("#password").val('').attr("placeholder", "Password");
-                    localStorage.setItem("cUser", result.UserID);
+                    localStorage.setItem(APP_PROFILE.CurrentUser, JSON.stringify(result));
+                    CurrentUser = getCurrentUser();
                 }
                 else {
-                    //$$("#password").val('').attr("placeholder", "Password");
-                    myApp.alert("Login Fail.");
+                    myApp.alert(APP_MESSAGE.LoginFailed);
                 }
             }
             var urlLogin = BaseURLApp + "login";
             GetDataAndRender(urlLogin, RenderAfterLogin);
-            //$$("#certURL").val('').attr("placeholder", "Voith Email ID");
-            //$$("#Password").val('').attr("placeholder", "Password");
-            //myApp.popup('.login-screen');
-            //$$("#submit_btn").on('click', function () {
-            //    var oLoginData = new Object();
-            //    oLoginData.Email = $$("#certURL").val();
-            //    oLoginData.Password = $$("#password").val();
-            //    function RenderAfterLogin(result) {
-            //        //Load Data
-            //        if (result != null && result.UserID != null && Number(result.UserID) > 0) {
-            //            myApp.closeModal('.login-screen');
-            //            $$("#certURL").val('').attr("placeholder", "Voith Email ID");
-            //            $$("#password").val('').attr("placeholder", "Password");
-            //            localStorage.setItem("cUser", result.UserID);
-            //        }
-            //        else {
-            //            $$("#password").val('').attr("placeholder", "Password");
-            //            myApp.alert("Login Fail.");
-            //        }
-            //    }
-            //    var urlLogin = BaseURLApp + "login";
-            //    PostDataAndRender(urlLogin, RenderAfterLogin, oLoginData)
-            //});
         }
     }).trigger();
 }
+else {
+    myApp.onPageInit('index', function (e) {
+        if (typeof e != 'undefined' && e.from == "left")
+            return;
+        localStorage.setItem(APP_PROFILE.CurrentUser, '');
+        var cUserID = localStorage.getItem(APP_PROFILE.CurrentUser).UserID;
+        if (cUserID == null || cUserID == '' || Number(cUserID) <= 0) {
+            mainView.router.loadPage('login.html');
+        }
+    }).trigger();
+}
+
+
+
+/* ===== Login screen page events ===== */
+myApp.onPageInit('login-screen-embedded', function (page) {
+    $$(page.container).find('.list-button').on('click', function () {
+        var username = $$(page.container).find('input[name="username"]').val();
+        var password = $$(page.container).find('input[name="password"]').val();
+        myApp.alert('Username: ' + username + ', password: ' + password, function () {
+            mainView.router.back();
+        });
+    });
+});
+
 // In page events:
 $$(document).on('pageInit', function (e) {
     // Page Data contains all required information about loaded and initialized page 
     var page = e.detail.page;
 
     switch (page.name) {
+        case 'login':
+            $$('.sign-in').on('click', function () {
+                var username = $$("#lgnUserName").val();
+                var password = $$("#lgnPassword").val();
+                var settings = {
+                    "username": username,
+                    "password": password,
+                    "async": true,
+                    "crossDomain": true,
+                    "url": BaseURLApp + "login",
+                    "method": "GET",
+                    "cash": true,
+                    "headers": {
+                        //"cache-control":"no-cache"
+                    }
+                };
+                $.support.cors = true;
+                $.ajax(settings).done(function (result) {
+
+                    localStorage.setItem(APP_PROFILE.CurrentUser, JSON.stringify(result));
+                    CurrentUser = getCurrentUser();
+
+                    localStorage.setItem(APP_PROFILE.WindowsUser, username);
+                    localStorage.setItem(APP_PROFILE.WindowsPass, password);
+
+                    mainView.router.loadPage("index.html?ts=" + Date.now());
+                }).fail(function () {
+                    alert("login not found : " + settings.url);
+                });
+            });
+            break;
         case "RegionalSummary":
             if (page.from == "right")
                 GetRegionalSummary();
