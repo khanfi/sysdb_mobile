@@ -49,7 +49,7 @@
     <plugin name="cordova-plugin-file" spec="4.3.1" />
     <plugin name="cordova-plugin-secure-storage" spec="2.6.3" />-->
 
-    <!--<icon src="icon.png" />-->
+    <icon src="icon.png" />
     <!--<platform name="android">
         <icon density="ldpi" src="www/res/icon/android/drawable-ldpi-icon.png" />
         <icon density="mdpi" src="www/res/icon/android/drawable-mdpi-icon.png" />

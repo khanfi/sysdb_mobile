@@ -19,7 +19,7 @@ var BaseURLWeb = "https://vpvitterdevcon.voith.net/api/sysdbmobile/"; //vpn
 var BaseURLApp = "https://vpvitterdevconvpn.voith.net/api/sysdbmobile/"; //vpn mobile test
 //var BaseURLApp = "https://dev-mobileapps.voith.com/voii.mobileapptest/api/sysdbmobile/"; //mobile test
 //var BaseURLApp = "https://mobileapps.voith.com/voithmobileapi/sys/api/sysdbmobile/"; //mobile prod
-var ENV = "APP"; //Switch between mobile app and web app (Set for web:WEB and mobile:APP)
+var ENV = "WEB"; //Switch between mobile app and web app (Set for web:WEB and mobile:APP)
 
 if (ENV != "APP" && (myApp.device.iphone || myApp.device.ipad || myApp.device.android)) {
     ENV = "APP";
@@ -61,58 +61,31 @@ function GetDataAndRender(urlAddress, fnRenderData, Arg1) {
     //    myApp.hideIndicator();
     //}
     if (navigator.onLine) {
-        //if (ENV == "WEB") {
-        //    $$.ajax({
-        //        url: urlAddress,
-        //        type: "GET",
-        //        dataType: 'json',
-        //        success: function (result) {
-        //            ////Save to Local Store
-        //            //if (sLocalStoreKey != null)
-        //            //    localStorage.setItem(sLocalStoreKey, JSON.stringify(result));
+        $.ajax({
+            username: localStorage.getItem(APP_PROFILE.WindowsUser),
+            password: localStorage.getItem(APP_PROFILE.WindowsPass),
+            async: true,
+            crossDomain: true,
+            url: urlAddress,
+            type: "GET",
+            dataType: 'json',
+            success: function (result) {
+                ////Save to Local Store
+                //if (sLocalStoreKey != null)
+                //    localStorage.setItem(sLocalStoreKey, JSON.stringify(result));
+                fnRenderData(result, Arg1);
+                myApp.hideIndicator();
+            },
+            error: function (xhr, status, error) {
+                myApp.hideIndicator();
 
-        //            fnRenderData(result, Arg1);
-        //            myApp.hideIndicator();
-        //        },
-        //        error: function (xhr, status, error) {
-        //            myApp.hideIndicator();
-
-        //            if (!navigator.onLine) {
-        //                myApp.alert(APP_MESSAGE.NetworkNotAbailable);
-        //            } else {
-        //                var err = eval("(" + xhr.responseText + ")");
-        //                myApp.alert(err.Message);
-        //            }
-        //        }
-        //    });
-        //} else
-        {
-            $.ajax({
-                username: localStorage.getItem(APP_PROFILE.WindowsUser),
-                password: localStorage.getItem(APP_PROFILE.WindowsPass),
-                async: true,
-                crossDomain: true,
-                url: urlAddress,
-                type: "GET",
-                dataType: 'json',
-                success: function (result) {
-                    ////Save to Local Store
-                    //if (sLocalStoreKey != null)
-                    //    localStorage.setItem(sLocalStoreKey, JSON.stringify(result));
-                    fnRenderData(result, Arg1);
-                    myApp.hideIndicator();
-                },
-                error: function (xhr, status, error) {
-                    myApp.hideIndicator();
-
-                    if (!navigator.onLine) {
-                        myApp.alert(APP_MESSAGE.NetworkNotAbailable);
-    } else {
-                        myApp.alert(status + error);
-}
+                if (!navigator.onLine) {
+                    myApp.alert(APP_MESSAGE.NetworkNotAbailable);
+                } else {
+                    myApp.alert(status + error);
                 }
-            });
-                }
+            }
+        });
     } else {
         alert(APP_MESSAGE.NetworkNotAbailable);
     }
@@ -132,9 +105,8 @@ if (ENV == "WEB") {
     myApp.onPageInit('index', function (e) {
         if (typeof e != 'undefined' && e.from == "left")
             return;
-        //localStorage.setItem(APP_PROFILE.CurrentUser, '');
-        var cUserID = localStorage.getItem(APP_PROFILE.CurrentUser).UserID;
-        if (cUserID == null || cUserID == '' || Number(cUserID) <= 0) {
+
+        if (CurrentUser == null || CurrentUser.UserID == null || CurrentUser.UserID == '' || Number(CurrentUser.UserID) <= 0) {
             function RenderAfterLogin(result) {
                 if (result != null && result.UserID != null && Number(result.UserID) > 0) {
                     localStorage.setItem(APP_PROFILE.CurrentUser, JSON.stringify(result));
@@ -153,9 +125,8 @@ else {
     myApp.onPageInit('index', function (e) {
         if (typeof e != 'undefined' && e.from == "left")
             return;
-        //localStorage.setItem(APP_PROFILE.CurrentUser, '');
-        var cUserID = localStorage.getItem(APP_PROFILE.CurrentUser).UserID;
-        if (cUserID == null || cUserID == '' || Number(cUserID) <= 0) {
+
+        if (CurrentUser == null || CurrentUser.UserID == null || CurrentUser.UserID == '' || Number(CurrentUser.UserID) <= 0) {
             mainView.router.loadPage('login.html');
         }
     }).trigger();
@@ -411,7 +382,7 @@ function RenderTabInfo(data) {
     var strHtml = '';
     for (var i = 0; i < data.length; i++) {
         var obj = data[i];
-        strHtml += '<li class="accordion-item">';
+        strHtml += '<li class="accordion-item bg-#8e8e93">';
         strHtml += ' <a href="#" class="item-content item-link">';
         strHtml += '<div class="item-inner">'
         strHtml += '<div class="item-title">' + obj[0]["Group"] + '</div>';
@@ -421,11 +392,11 @@ function RenderTabInfo(data) {
             strHtml += '<div class="accordion-item-content">';
             strHtml += '<div class="list-block">';
             strHtml += '<ul>';
-            strHtml += '<li>';
+            strHtml += '<li class="bg-white">';
             strHtml += '<div class="item-content">';
             strHtml += '<div class="item-inner">';
-            strHtml += '<div class="item-title label font12">' + objIterate["FieldTitle"] + '</div>';
-            strHtml += '<div class="item-input lable font12">' + objIterate["Value"] + '</div>';
+            strHtml += '<div class="item-text label">&nbsp;&nbsp;&nbsp;' + objIterate["FieldTitle"] + '</div>';
+            strHtml += '<div class="item-after">' + objIterate["Value"] + '</div>';
             //strHtml += '<input type="textarea" value=' + objIterate["Value"] + '></input></div>';
             //+ objIterate["Value"] + '</div>';
             strHtml += '</div>';
