@@ -132,7 +132,7 @@ if (ENV == "WEB") {
     myApp.onPageInit('index', function (e) {
         if (typeof e != 'undefined' && e.from == "left")
             return;
-        localStorage.setItem(APP_PROFILE.CurrentUser, '');
+        //localStorage.setItem(APP_PROFILE.CurrentUser, '');
         var cUserID = localStorage.getItem(APP_PROFILE.CurrentUser).UserID;
         if (cUserID == null || cUserID == '' || Number(cUserID) <= 0) {
             function RenderAfterLogin(result) {
@@ -153,7 +153,7 @@ else {
     myApp.onPageInit('index', function (e) {
         if (typeof e != 'undefined' && e.from == "left")
             return;
-        localStorage.setItem(APP_PROFILE.CurrentUser, '');
+        //localStorage.setItem(APP_PROFILE.CurrentUser, '');
         var cUserID = localStorage.getItem(APP_PROFILE.CurrentUser).UserID;
         if (cUserID == null || cUserID == '' || Number(cUserID) <= 0) {
             mainView.router.loadPage('login.html');
