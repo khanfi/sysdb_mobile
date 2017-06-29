@@ -392,10 +392,10 @@ function RenderTabInfo(data) {
             strHtml += '<div class="accordion-item-content">';
             strHtml += '<div class="list-block">';
             strHtml += '<ul>';
-            strHtml += '<li class="bg-white">';
+            strHtml += '<li>';
             strHtml += '<div class="item-content">';
             strHtml += '<div class="item-inner">';
-            strHtml += '<div class="item-text label">&nbsp;&nbsp;&nbsp;' + objIterate["FieldTitle"] + '</div>';
+            strHtml += '<div class="item-text label">' + objIterate["FieldTitle"] + '</div>';
             strHtml += '<div class="item-subtitle">' + objIterate["Value"] + '</div>';
             //strHtml += '<input type="textarea" value=' + objIterate["Value"] + '></input></div>';
             //+ objIterate["Value"] + '</div>';
