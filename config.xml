@@ -20,7 +20,7 @@
     <preference name="WindowsDefaultUriPrefix" value="ms-appx://" />
     <preference name="Windows.Mobile-MaxVersionTested" value="10.0.10031.0" />
     <preference name="Windows.Universal-MinVersion" value="10.0.0.0" />
-    <preference name="WindowsStoreIdentityName" value="A997ABD9.VoithTestApp" />
+    <preference name="WindowsStoreIdentityName" value="VOITH.DSI.SYSDB" />
     <preference name="WindowsStorePublisherName" value="CN=Voith Digital Solutions Inc, O=Voith Digital Solutions Inc, L=York, S=PA, C=US" />
     <preference name="WindowsToastCapable" value="true" />
     <preference name="uap-target-min-version" value="10.0.10586.0" />
