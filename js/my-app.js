@@ -66,7 +66,7 @@ function GetDataAndRender(urlAddress, fnRenderData, Arg1) {
     if (navigator.onLine) {
         var _user = localStorage.getItem(APP_PROFILE.WindowsUser);
         var _pass = localStorage.getItem(APP_PROFILE.WindowsPass)
-
+        alert(_user + '\n' + _pass);
         $.ajax({
             username: _user,
             password: _pass,
@@ -75,9 +75,9 @@ function GetDataAndRender(urlAddress, fnRenderData, Arg1) {
             url: urlAddress,
             type: "GET",
             dataType: 'json',
-            //beforeSend: function (xhr) {
-            //    xhr.setRequestHeader("Authorization", "Basic " + btoa(_user + ":" + _pass));
-            //},
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("Authorization", "Basic " + btoa(_user + ":" + _pass));
+            },
             success: function (result) {
                 ////Save to Local Store
                 //if (sLocalStoreKey != null)
