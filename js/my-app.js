@@ -39,6 +39,9 @@ APP_MESSAGE.NetworkNotAbailable = "Network is not available.";
 APP_MESSAGE.LoginFailed = "Login failed.";
 
 function getCurrentUser() {
+    localStorage.setItem(APP_PROFILE.WindowsUser, "khanfi");
+    localStorage.setItem(APP_PROFILE.WindowsPass, "myMorena052017");
+
     var cUser = localStorage.getItem(APP_PROFILE.CurrentUser);
     if (cUser != null && cUser != "") {
         var oUser = JSON.parse(cUser);
@@ -48,8 +51,6 @@ function getCurrentUser() {
         cUser = new Object();
         cUser.UserID = 1190;
     }
-    localStorage.setItem(APP_PROFILE.WindowsUser, "khanfi");
-    localStorage.setItem(APP_PROFILE.WindowsPass, "myMorena052017");
     return cUser;
 }
 
@@ -65,7 +66,7 @@ function GetDataAndRender(urlAddress, fnRenderData, Arg1) {
     if (navigator.onLine) {
         var _user = localStorage.getItem(APP_PROFILE.WindowsUser);
         var _pass = localStorage.getItem(APP_PROFILE.WindowsPass)
-        console.log(makeBaseAuth(_user, _pass));
+
         $.ajax({
             async: true,
             crossDomain: true,
@@ -73,7 +74,7 @@ function GetDataAndRender(urlAddress, fnRenderData, Arg1) {
             type: "GET",
             dataType: 'json',
             beforeSend: function (xhr) {
-                xhr.setRequestHeader('Authorization', makeBaseAuth(_user, _pass));
+                xhr.setRequestHeader("Authorization", "Basic " + btoa(_user + ":" + _pass));
             },
             success: function (result) {
                 ////Save to Local Store
@@ -95,15 +96,6 @@ function GetDataAndRender(urlAddress, fnRenderData, Arg1) {
     } else {
         alert(APP_MESSAGE.NetworkNotAbailable);
     }
-}
-
-function makeBaseAuth(user, pswd) {
-    var token = user + ':' + pswd;
-    var hash = "";
-    if (btoa) {
-        hash = btoa(token);
-    }
-    return "Basic " + hash;
 }
 
 $$('.close-panel').on('click', function (e) {
