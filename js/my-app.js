@@ -84,7 +84,7 @@ function GetDataAndRender(urlAddress, fnRenderData, Arg1) {
                 if (!navigator.onLine) {
                     myApp.alert(APP_MESSAGE.NetworkNotAbailable);
                 } else {
-                    myApp.alert(status + error);
+                    myApp.alert(status  + '\n' + error + '\n' + urlAddress);
                 }
             }
         });
