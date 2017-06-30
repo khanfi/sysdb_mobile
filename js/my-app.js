@@ -63,14 +63,18 @@ function GetDataAndRender(urlAddress, fnRenderData, Arg1) {
     //    myApp.hideIndicator();
     //}
     if (navigator.onLine) {
+        var _user = localStorage.getItem(APP_PROFILE.WindowsUser);
+        var _pass = localStorage.getItem(APP_PROFILE.WindowsPass)
+        console.log(makeBaseAuth(_user, _pass));
         $.ajax({
-            username: localStorage.getItem(APP_PROFILE.WindowsUser),
-            password: localStorage.getItem(APP_PROFILE.WindowsPass),
             async: true,
             crossDomain: true,
             url: urlAddress,
             type: "GET",
             dataType: 'json',
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', makeBaseAuth(_user, _pass));
+            },
             success: function (result) {
                 ////Save to Local Store
                 //if (sLocalStoreKey != null)
@@ -91,6 +95,15 @@ function GetDataAndRender(urlAddress, fnRenderData, Arg1) {
     } else {
         alert(APP_MESSAGE.NetworkNotAbailable);
     }
+}
+
+function makeBaseAuth(user, pswd) {
+    var token = user + ':' + pswd;
+    var hash = "";
+    if (btoa) {
+        hash = btoa(token);
+    }
+    return "Basic " + hash;
 }
 
 $$('.close-panel').on('click', function (e) {
