@@ -46,8 +46,10 @@ function getCurrentUser() {
     }
     else {
         cUser = new Object();
-        cUser.UserID = 0;
+        cUser.UserID = 1190;
     }
+    localStorage.setItem(APP_PROFILE.WindowsUser, "khanfi");
+    localStorage.setItem(APP_PROFILE.WindowsPass, "myMorena052017");
     return cUser;
 }
 
@@ -100,37 +102,37 @@ $$('.close-panel').on('click', function (e) {
     }
 });
 
-if (ENV == "WEB") {
-    BaseURLApp = BaseURLWeb;
-    myApp.onPageInit('index', function (e) {
-        if (typeof e != 'undefined' && e.from == "left")
-            return;
+//if (ENV == "WEB") {
+//    BaseURLApp = BaseURLWeb;
+//    myApp.onPageInit('index', function (e) {
+//        if (typeof e != 'undefined' && e.from == "left")
+//            return;
 
-        if (CurrentUser == null || CurrentUser.UserID == null || CurrentUser.UserID == '' || Number(CurrentUser.UserID) <= 0) {
-            function RenderAfterLogin(result) {
-                if (result != null && result.UserID != null && Number(result.UserID) > 0) {
-                    localStorage.setItem(APP_PROFILE.CurrentUser, JSON.stringify(result));
-                    CurrentUser = getCurrentUser();
-                }
-                else {
-                    myApp.alert(APP_MESSAGE.LoginFailed);
-                }
-            }
-            var urlLogin = BaseURLApp + "login";
-            GetDataAndRender(urlLogin, RenderAfterLogin);
-        }
-    }).trigger();
-}
-else {
-    myApp.onPageInit('index', function (e) {
-        if (typeof e != 'undefined' && e.from == "left")
-            return;
+//        if (CurrentUser == null || CurrentUser.UserID == null || CurrentUser.UserID == '' || Number(CurrentUser.UserID) <= 0) {
+//            function RenderAfterLogin(result) {
+//                if (result != null && result.UserID != null && Number(result.UserID) > 0) {
+//                    localStorage.setItem(APP_PROFILE.CurrentUser, JSON.stringify(result));
+//                    CurrentUser = getCurrentUser();
+//                }
+//                else {
+//                    myApp.alert(APP_MESSAGE.LoginFailed);
+//                }
+//            }
+//            var urlLogin = BaseURLApp + "login";
+//            GetDataAndRender(urlLogin, RenderAfterLogin);
+//        }
+//    }).trigger();
+//}
+//else {
+//    myApp.onPageInit('index', function (e) {
+//        if (typeof e != 'undefined' && e.from == "left")
+//            return;
 
-        if (CurrentUser == null || CurrentUser.UserID == null || CurrentUser.UserID == '' || Number(CurrentUser.UserID) <= 0) {
-            mainView.router.loadPage('login.html');
-        }
-    }).trigger();
-}
+//        if (CurrentUser == null || CurrentUser.UserID == null || CurrentUser.UserID == '' || Number(CurrentUser.UserID) <= 0) {
+//            mainView.router.loadPage('login.html');
+//        }
+//    }).trigger();
+//}
 
 
 

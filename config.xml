@@ -12,18 +12,18 @@
     <preference name="windows-identity-name" value="voith.dsi.sysdb" />
 
     <!-- Windows only preferences -->
-    <!--<preference name="windows-appx-target" value="uap" />-->
+    <preference name="windows-appx-target" value="uap" />
     <preference name="windows-arch" value="arm" />
     <preference name="windows-phone-target-version" value="10.0" />
     <preference name="windows-target-version" value="10.0" />
-    <!--<preference name="Windows.Universal" value="10.0.10240.0" />-->
+    <preference name="Windows.Universal" value="10.0.10240.0" />
     <preference name="WindowsDefaultUriPrefix" value="ms-appx://" />
-    <!--<preference name="Windows.Mobile-MaxVersionTested" value="10.0.10031.0" />-->
-    <!--<preference name="Windows.Universal-MinVersion" value="10.0.0.0" />-->
+    <preference name="Windows.Mobile-MaxVersionTested" value="10.0.10031.0" />
+    <preference name="Windows.Universal-MinVersion" value="10.0.0.0" />
     <preference name="WindowsStoreIdentityName" value="voith.dsi.sysdb" />
     <preference name="WindowsStorePublisherName" value="CN=Voith Digital Solutions Inc, O=Voith Digital Solutions Inc, L=York, S=PA, C=US" />
     <preference name="WindowsToastCapable" value="true" />
-    <!--<preference name="uap-target-min-version" value="10.0.10586.0" />-->
+    <preference name="uap-target-min-version" value="10.0.10586.0" />
     <preference name="DisallowOverscroll" value="true" />
     <preference name="android-minSdkVersion" value="14" />
     
@@ -103,8 +103,8 @@
         <icon height="159" platform="wp8" src="www/res/icon/wp8/Background.png" width="159" />
         <splash height="1280" platform="wp8" src="www/res/screen/wp8/screen-portrait.jpg" width="768" />
     </platform>-->
-    <platform name="windows">
-        <!--<icon height="150" platform="windows" src="www/res/icon/windows/Square150x150Logo.scale-100.png" width="150" />
+    <!--<platform name="windows">
+        <icon height="150" platform="windows" src="www/res/icon/windows/Square150x150Logo.scale-100.png" width="150" />
         <icon height="30" platform="windows" src="www/res/icon/windows/Square30x30Logo.scale-100.png" width="30" />
         <icon height="50" platform="windows" src="www/res/icon/windows/StoreLogo.scale-100.png" width="50" />
         <splash height="300" platform="windows" src="www/res/screen/windows/SplashScreen.scale-100.png" width="620" />
@@ -118,9 +118,9 @@
         <icon height="310" platform="windows" src="www/res/icon/windows/Square310x310Logo.scale-100.png" width="310" />
         <icon height="150" platform="windows" src="www/res/icon/windows/Wide310x150Logo.scale-100.png" width="310" />
         <icon height="360" platform="windows" src="www/res/icon/windows/Wide310x150Logo.scale-240.png" width="744" />
-        <splash height="1920" platform="windows" src="www/res/screen/windows/SplashScreenPhone.scale-240.png" width="1152" />-->
-    </platform>
-    <access origin="*" />
+        <splash height="1920" platform="windows" src="www/res/screen/windows/SplashScreenPhone.scale-240.png" width="1152" />
+    </platform>-->
+    <!--<access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
     <allow-intent href="tel:*" />
@@ -134,6 +134,6 @@
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
         <preference name="KeychainAccessibility" value="WhenUnlocked"/>
-    </platform>
+    </platform>-->
 
 </widget>
