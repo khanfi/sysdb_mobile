@@ -66,7 +66,7 @@ function GetDataAndRender(urlAddress, fnRenderData, Arg1) {
     if (navigator.onLine) {
         var _user = localStorage.getItem(APP_PROFILE.WindowsUser);
         var _pass = localStorage.getItem(APP_PROFILE.WindowsPass)
-        alert(_user + '\n' + _pass);
+        myApp.alert(_user + _pass);
         $.ajax({
             username: _user,
             password: _pass,
