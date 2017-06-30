@@ -68,14 +68,16 @@ function GetDataAndRender(urlAddress, fnRenderData, Arg1) {
         var _pass = localStorage.getItem(APP_PROFILE.WindowsPass)
 
         $.ajax({
+            username: _user,
+            password: _pass,
             async: true,
             crossDomain: true,
             url: urlAddress,
             type: "GET",
             dataType: 'json',
-            beforeSend: function (xhr) {
-                xhr.setRequestHeader("Authorization", "Basic " + btoa(_user + ":" + _pass));
-            },
+            //beforeSend: function (xhr) {
+            //    xhr.setRequestHeader("Authorization", "Basic " + btoa(_user + ":" + _pass));
+            //},
             success: function (result) {
                 ////Save to Local Store
                 //if (sLocalStoreKey != null)
