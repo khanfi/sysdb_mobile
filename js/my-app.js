@@ -211,26 +211,28 @@ $$(document).on('pageInit', function (e) {
             }
             break;
         case "DeviceTabs":
-            var id = getParmFromUrl(page.url, "ID");
+            var deviceId = getParmFromUrl(page.url, "ID");
             var deviceName = getParmFromUrl(page.url, "Name");
             var description = getParmFromUrl(page.url, "desc");
-            $$("#hiddenInputDeviceID").val(id);
+            $$("#hiddenInputDeviceID").val(deviceId);
             $$("#divNavbarTitle").html(deviceName);
-            $$("#deviceName").html(deviceName);
-            $$("#deviceDescription").html(description);
-            localStorage.setItem("deviceName", deviceName);
-            //myApp.template7Data.Name = deviceName;
-            localStorage.setItem("deviceDesc", description);
-            //myApp.template7Data.Description = description;
-            GetDeviceTabs(id);
+            $$("#divSelectedDeviceInfo").html(description);
+            //$$("#deviceName").html(deviceName);
+            //$$("#deviceDescription").html(description);
+            //localStorage.setItem("deviceName", deviceName);
+            //localStorage.setItem("deviceDesc", description);
+            GetDeviceTabs(deviceId, deviceName);
             break;
         case "DeviceTabDetails":
             var deviceID = $$("#hiddenInputDeviceID").val();
             var tabID = getParmFromUrl(page.url, "tabID");
-            var tabName = getParmFromUrl(page.url, "Name");
-            $$("#divNavbarDeviceTabDetail").html(tabName);
-            $$("#deviceNameForDeviceDetail").html(localStorage.getItem("deviceName"));//myApp.template7Data.Name
-            $$("#deviceDescriptionForDeviceDetail").html(localStorage.getItem("deviceDesc"));//myApp.template7Data.Description
+            var tabName = getParmFromUrl(page.url, "tabName");
+            var deviceName = getParmFromUrl(page.url, "deviceName");
+            $$("#divNavbarDeviceTabDetail").html(deviceName);
+            $$("#divSelectedTabName").html(tabName);
+            
+            //$$("#deviceNameForDeviceDetail").html(localStorage.getItem("deviceName"));//myApp.template7Data.Name
+            //$$("#deviceDescriptionForDeviceDetail").html(localStorage.getItem("deviceDesc"));//myApp.template7Data.Description
             GetSelectedTabInfo(deviceID, tabID);
             break;
         case "DeviceSearch":
@@ -248,43 +250,11 @@ function getParmFromUrl(url, parm) {
 function GetDeviceSummary(isFavoriteOnly) {
     var urlString = BaseURLApp + 'Getdevices?isFavoriteOnly=' + isFavoriteOnly + '&pUserID=' + CurrentUser.UserID;
     GetDataAndRender(urlString, RenderDevices);
-    //myApp.showIndicator();
-    //$$.ajax({
-    //    url: BaseURLApp + 'Getdevices?isFavoriteOnly=' + isFavoriteOnly,
-    //    type: "GET",
-    //    contentType: "application/json; charset=utf-8",
-    //    success: function (data, status, xhr) {
-    //        var result = JSON.parse(data);
-    //        myApp.template7Data.devices = result;
-    //        RenderDevices(result); //myApp.template7Data.devices
-    //        myApp.hideIndicator();
-    //    },
-    //    error: function (err) {
-    //        myApp.hideIndicator();
-    //        console.log(err);
-    //    }
-    //});
 }
 
 function GetDeviceByFilter(pName, pDescription, pClass, pModel, pITorg, pAdminTeam, pLansite) {
     var urlString = BaseURLApp + 'GetDevicesByFilter?pDeviceName=' + pName + '&pDescription=' + pDescription + '&pDeviceClass=' + pClass + '&pDeviceModel=' + pModel + '&pRespITOrg=' + pITorg + '&pAdminTeam=' + pAdminTeam + '&pLansite=' + pLansite + '&pUserID=' + CurrentUser.UserID;
     GetDataAndRender(urlString, RenderDevices);
-    //myApp.showIndicator();
-    //$$.ajax({
-    //    url: BaseURLApp + 'GetDevicesByFilter?pDeviceName=' + pName + '&pDescription=' + pDescription + '&pDeviceClass=' + pClass + '&pDeviceModel=' + pModel + '&pRespITOrg=' + pITorg + '&pAdminTeam=' + pAdminTeam + '&pLansite=' + pLansite,
-    //    type: "GET",
-    //    contentType: "application/json; charset=utf-8",
-    //    success: function (data, status, xhr) {
-    //        var result = JSON.parse(data);
-    //        myApp.template7Data.devices = result;
-    //        RenderDevices(result);
-    //        myApp.hideIndicator();
-    //    },
-    //    error: function (err) {
-    //        myApp.hideIndicator();
-    //        console.log(err);
-    //    }
-    //});
 }
 
 function RenderDevices(data) {
@@ -293,7 +263,6 @@ function RenderDevices(data) {
         localStorage.setItem("devices", JSON.stringify(data));
     $$("#ulDevices").html('');
     var strHtml = '';
-    // for (var i = 0; i < data.length; i++)
     $$.each(data, function (i) {
         strHtml += '<li>';
         strHtml += '<a href="DeviceTabs.html?ID=' + data[i]["CI_ID"] + '&Name=' + data[i]["Name"] + '&desc=' + data[i]["Description"] + '" class="item-link">';
@@ -322,34 +291,18 @@ function RenderDevices(data) {
     });
     $$("#ulDevices").html(strHtml);
     localStorage.setItem("devicePageSummaryStr", strHtml);
-    //myApp.template7Data.devicePageSummary = strHtml;
 }
 
-function GetDeviceTabs(id) {
-    var urlString = BaseURLApp + 'GetDeviceTabs?deviceID=' + id;
-    GetDataAndRender(urlString, RenderDeviceTabs);
-    //myApp.showIndicator();
-    //$$.ajax({
-    //    type: "GET",
-    //    contentType: "application/json; charset=utf-8",
-    //    url: BaseURLApp + 'GetDeviceTabs?deviceID=' + id,
-    //    success: function (data, status, xhr) {
-    //        var result = JSON.parse(data);
-    //        RenderDeviceTabs(result);
-    //        myApp.hideIndicator();
-    //    },
-    //    error: function (err) {
-    //        myApp.hideIndicator();
-    //        console.log(err);
-    //    }
-    //});
+function GetDeviceTabs(deviceId, deviceName) {
+    var urlString = BaseURLApp + 'GetDeviceTabs?deviceID=' + deviceId + '&deviceName=' + deviceName;
+    GetDataAndRender(urlString, RenderDeviceTabs, deviceName);
 }
 
-function RenderDeviceTabs(data) {
+function RenderDeviceTabs(data, deviceName) {
     var strHtml = '';
     for (var i = 0; i < data.length; i++) {
         strHtml += '<li>';
-        strHtml += ' <a href="DeviceTabDetails.html?tabID=' + data[i]["id"] + '&Name=' + data[i]["name"] + '" class="item-content item-link">';
+        strHtml += ' <a href="DeviceTabDetails.html?tabID=' + data[i]["id"] + '&tabName=' + data[i]["name"] + '&deviceName=' + deviceName + '" class="item-content item-link">';
         strHtml += '<div class="item-inner">'
         strHtml += '<div class="item-title">' + data[i]["name"] + '</div>';
         strHtml += '</div></a>';
@@ -361,21 +314,6 @@ function RenderDeviceTabs(data) {
 function GetSelectedTabInfo(deviceID, tabID) {
     var urlString = BaseURLApp + 'GetTabInfoByDeviceIDAndTabID?deviceID=' + deviceID + '&tabID=' + tabID;
     GetDataAndRender(urlString, RenderTabInfo);
-    //myApp.showIndicator();
-    //$$.ajax({
-    //    type: "GET",
-    //    contentType: "application/json; charset=utf-8",
-    //    url: BaseURLApp + 'GetTabInfoByDeviceIDAndTabID?deviceID=' + deviceID + '&tabID=' + tabID,
-    //    success: function (data, status, xhr) {
-    //        var result = JSON.parse(data);
-    //        RenderTabInfo(result);
-    //        myApp.hideIndicator();
-    //    },
-    //    error: function (err) {
-    //        myApp.hideIndicator();
-    //        console.log(err);
-    //    }
-    //});
 }
 
 function RenderTabInfo(data) {
@@ -414,21 +352,6 @@ function RenderTabInfo(data) {
 function GetRegionalSummary() {
     var urlString = BaseURLApp + 'GetDeviceRegionalSummary';
     GetDataAndRender(urlString, RenderRegionalSummary);
-    //myApp.showIndicator();
-    //$$.ajax({
-    //    url: BaseURLApp + 'GetDeviceRegionalSummary',
-    //    type: "GET",
-    //    contentType: "application/json; charset=utf-8",
-    //    success: function (data, status, xhr) {
-    //        var result = JSON.parse(data);
-    //        RenderRegionalSummary(result);
-    //        myApp.hideIndicator();
-    //    },
-    //    error: function (err) {
-    //        myApp.hideIndicator();
-    //        console.log(err);
-    //    }
-    //});
 }
 
 function RenderRegionalSummary(data) {
@@ -466,19 +389,6 @@ function RenderRegionalSummary(data) {
 function GetSearchData() {
     var urlString = BaseURLApp + 'GetSearchData';
     GetDataAndRender(urlString, RenderRegionalSummary);
-    //$$.ajax({
-    //    type: "GET",
-    //    contentType: "application/json; charset=utf-8",
-    //    url: BaseURLApp + 'GetSearchData',
-    //    success: function (data, status, xhr) {
-    //        var result = JSON.parse(data);
-    //        //localStorage.setItem("lanSites", result);
-    //        //myApp.template7Data.lanSites = result;
-    //    },
-    //    error: function (err) {
-    //        console.log(err);
-    //    }
-    //});
 }
 
 function AddAsFavorite(deviceID, isFavorite) {
