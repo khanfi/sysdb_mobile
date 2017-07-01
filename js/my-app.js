@@ -128,7 +128,7 @@ $$('.close-panel').on('click', function (e) {
 //    }).trigger();
 //}
 //else 
-/*
+
 {
     myApp.onPageInit('index', function (e) {
        if (typeof e != 'undefined' && e.from == "left")
@@ -139,7 +139,7 @@ $$('.close-panel').on('click', function (e) {
         }
     }).trigger();
 }
-*/
+
 
 
 /* ===== Login screen page events ===== */
