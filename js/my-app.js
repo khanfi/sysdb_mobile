@@ -39,9 +39,6 @@ APP_MESSAGE.NetworkNotAbailable = "Network is not available.";
 APP_MESSAGE.LoginFailed = "Login failed.";
 
 function getCurrentUser() {
-    localStorage.setItem(APP_PROFILE.WindowsUser, "khanfi");
-    localStorage.setItem(APP_PROFILE.WindowsPass, "myMorena052017");
-
     var cUser = localStorage.getItem(APP_PROFILE.CurrentUser);
     if (cUser != null && cUser != "") {
         var oUser = JSON.parse(cUser);
@@ -131,14 +128,14 @@ $$('.close-panel').on('click', function (e) {
 //    }).trigger();
 //}
 //else {
-//    myApp.onPageInit('index', function (e) {
+    myApp.onPageInit('index', function (e) {
 //        if (typeof e != 'undefined' && e.from == "left")
 //            return;
 
 //        if (CurrentUser == null || CurrentUser.UserID == null || CurrentUser.UserID == '' || Number(CurrentUser.UserID) <= 0) {
 //            mainView.router.loadPage('login.html');
 //        }
-//    }).trigger();
+    }).trigger();
 //}
 
 
