@@ -132,9 +132,9 @@ $$('.close-panel').on('click', function (e) {
 //        if (typeof e != 'undefined' && e.from == "left")
 //            return;
 
-//        if (CurrentUser == null || CurrentUser.UserID == null || CurrentUser.UserID == '' || Number(CurrentUser.UserID) <= 0) {
-//            mainView.router.loadPage('login.html');
-//        }
+        if (CurrentUser == null || CurrentUser.UserID == null || CurrentUser.UserID == '' || Number(CurrentUser.UserID) <= 0) {
+            mainView.router.loadPage('login.html');
+        }
     }).trigger();
 //}
 
