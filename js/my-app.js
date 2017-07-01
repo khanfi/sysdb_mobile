@@ -127,16 +127,17 @@ $$('.close-panel').on('click', function (e) {
 //        }
 //    }).trigger();
 //}
-//else {
+//else 
+{
     myApp.onPageInit('index', function (e) {
-//        if (typeof e != 'undefined' && e.from == "left")
-//            return;
+       if (typeof e != 'undefined' && e.from == "left")
+            return;
 
         if (CurrentUser == null || CurrentUser.UserID == null || CurrentUser.UserID == '' || Number(CurrentUser.UserID) <= 0) {
-            mainView.router.loadPage('login.html');
+            myApp.mainView.router.loadPage('login.html');
         }
     }).trigger();
-//}
+}
 
 
 
