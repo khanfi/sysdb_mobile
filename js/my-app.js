@@ -46,7 +46,7 @@ function getCurrentUser() {
     }
     else {
         cUser = new Object();
-        cUser.UserID = 1190;
+        cUser.UserID = 0;
     }
     return cUser;
 }
