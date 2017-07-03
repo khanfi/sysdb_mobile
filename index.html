@@ -2,28 +2,69 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-status-bar-style" content="white">
     <title>SYSDB MOBILE</title>
-    <!-- Path to Framework7 Library CSS-->
-    <link rel="stylesheet" href="css/framework7.ios.min.css">
-    <link rel="stylesheet" href="css/framework7.ios.colors.min.css">
-    <!-- Path to your custom app styles-->
+    <link rel="stylesheet" href="css/framework7.ios.css">
+    <link rel="stylesheet" href="css/framework7.ios.colors.css">
+    <link rel="stylesheet" href="css/ios_icons.css">
     <link rel="stylesheet" href="css/my-app.css">
 </head>
-<body>
-    <div id="divCert"></div>
+<body class="layout-white">
     <!-- Status bar overlay for fullscreen mode-->
     <div class="statusbar-overlay"></div>
     <!-- Panels overlay-->
     <div class="panel-overlay"></div>
     <!-- Left panel with reveal effect-->
-    <div class="panel panel-left panel-reveal">
-        <div class="content-block">
+    <div class="panel panel-left panel-cover layout-white">
+        <div class="close-x">
+            <a href="#" class="close-panel icon-only"> <i class="f7-icons color-blue ">close</i> </a>
+        </div>
+        <div class="content-block-title">Menu</div>
+        <!--<div class="content-block">
             <p><a href="#" data-icon="refresh" tabindex="1" class="close-panel">My All Devices</a></p>
-            <!-- Click on link with "open-panel" and data-panel="right" attribute will open Right panel -->
+             Click on link with "open-panel" and data-panel="right" attribute will open Right panel 
             <p><a href="#" data-icon="star" tabindex="2" class="close-panel">Favorite Devices</a></p>
+        </div>-->
+        <!--<div class="content-block">
+            <p>This is a side panel. Put the settings, login, about and help infromation for your app here</p>
+        </div>-->
+        <div class="list-block">
+            <ul>
+                <li>
+                    <a href="login.html" class="item-link close-panel">
+                        <div class="item-content">
+                            <div class="item-inner">
+                                <div class="item-title">Sign-in</div>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+                <!--<li>
+                    <a href="ios/about.html" class="item-link close-panel">
+                        <div class="item-content">
+                            <div class="item-inner">
+                                <div class="item-title">About</div>
+                            </div>
+                        </div>
+                    </a>
+                </li>-->
+                <!--<li>
+                    <a href="mailto:ApplicationDevelopmentSupport.VOII@voith.com" class="item-link close-panel">
+                        <div class="item-content">
+                            <div class="item-inner">
+                                <div class="item-title">Support</div>
+                            </div>
+                        </div>
+                    </a>
+                </li>-->
+            </ul>
+        </div>
+        <div class="content-block-title">SysDB Mobile</div>
+        <div class="content-block">
+            <p>Version 1.0 </p>
         </div>
     </div>
     <!-- Right panel with cover effect-->
@@ -39,15 +80,25 @@
             <!-- Top Navbar-->
             <div class="navbar">
                 <div class="navbar-inner">
+                    <div class="left">
+                        <a href="#" class="open-panel link icon-only"> <i class="f7-icons text-blue-voith">bars</i> </a>
+                    </div>
                     <div class="center sliding">SYSDB MOBILE</div>
-                    <div class="right"><img src="img/Voith_logotype.png" style="height: 20px;" /></div>
+                    <div class="right"><em class="f7-icons logo-size">v_logo</em></div>
                 </div>
             </div>
+            <!--<div class="toolbar">
+                <div class="toolbar-inner"><a href="#" class="link">Link</a><a href="#" data-popover=".popover-menu" class="open-popover link">Popover</a></div>
+            </div>-->
             <!-- Pages, because we need fixed-through navbar and toolbar, it has additional appropriate classes-->
             <div class="pages navbar-through toolbar-through">
                 <!-- Index Page-->
                 <div data-page="index" class="page">
                     <div class="page-content">
+                        <img class="intro-image" src="img/voith150logo_2.svg" /> 
+                        <br>
+                        <br>
+                        <br>
                         <div class="content-block-title">Welcome To SysDB mobile version</div>
                         <div class="content-block">
                             <div class="content-block-inner">
@@ -93,87 +144,18 @@
                                 </li>-->
                             </ul>
                         </div>
-                        <!--<div class="content-block-title">Side panels</div>
-                        <div class="content-block">
-                            <div class="row">
-                                <div class="col-50"><a href="#" data-panel="left" class="button open-panel">Left Panel</a></div>
-                                <div class="col-50"><a href="#" data-panel="right" class="button open-panel">Right Panel</a></div>
-                            </div>
-                        </div>-->
                     </div>
                 </div>
             </div>
-            <!-- Bottom Toolbar-->
-            <!--<div class="toolbar">
-                <div class="toolbar-inner"><a href="#" class="link">Link 1</a><a href="#" class="link">Link 2</a></div>
-            </div>-->
         </div>
     </div>
 
-    <!--<div class="login-screen">
-        <div class="view">
-            <div class="page">
-                <div class="page-content login-screen-content">
-                    <div class="login-screen-title app-title">sysDB</div>
-                    <div class="list-block">
-                        <ul>
-                            <li class="item-content">
-                                <div class="item-inner">
-                                    <div class="item-input">
-                                        <input type="text" name="username" id="certURL" value="" placeholder="PFX Certificate" />
-                                        http://mobile.voith.com/iphone/vvnumrtw.pfx
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="item-content">
-                                <div class="item-inner">
-                                    <div class="item-input">
-                                        <input type="password" name="password" id="password" value="" placeholder="Password" />
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="item-content">
-                                <div class="item-inner">
-                                    <a href="#" id="submit_btn" class="item-link list-button content-center">Submit</a>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>-->
-    <!-- Template7 templates-->
-    <!--<script type="text/template7" id="navbarTopTemplate">
-        <div class="navbar-inner">
-            <div class="left"><a href="#" class="back link"> <i class="icon icon-back"></i><span>Back</span></a></div>
-            <div id="divNavbarTitle" class="center sliding"></div>
-            <div class="right">
-                <img src="img/Voith_logotype.png" style="height: 20px;" />
-            </div>
-            <input id="hiddenInputDeviceID" type="hidden" />
-            <div class="subnavbar">
-                <div class="row">
-                    <div class="left">Device Name</div>
-                </div>
-                <div class="row">
-                    <div class="left">Description</div>
-                </div>
-            </div>
-        </div>
-    </script>-->
-    <!-- Path to Framework7 Library JS-->
-    <script type="text/javascript" src="js/framework7.min.js"></script>
-    <!-- Path to JQuery Library JS-->
-    <script type="text/javascript" src="js/jquery-3.1.0.js"></script>
-    <!-- Path to your app js-->
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/framework7.js"></script>
+    <script type="text/javascript" src="js/jQuery.min.3.1.1.js"></script>
     <script type="text/javascript" src="js/my-app.js"></script>
-    <!--<script type="text/javascript" src="js/index.js"></script>
-    <script type="text/javascript" src="js/PluginStartup.js"></script>
-    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
-    <script type="text/javascript" charset="utf-8" src="phonegap.js>"></script>-->
-    <!--<script type="text/javascript">
-        app.initialize();
-    </script>-->
+    <script type="text/javascript" src="js/login.js"></script>
+    <script type="text/javascript" src="js/secureStorage.js"></script>
+
 </body>
 </html>

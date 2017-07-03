@@ -19,10 +19,13 @@ var BaseURLWeb = "https://vpvitterdevcon.voith.net/api/sysdbmobile/"; //vpn
 var BaseURLApp = "https://vpvitterdevconvpn.voith.net/api/sysdbmobile/"; //vpn mobile test
 //var BaseURLApp = "https://dev-mobileapps.voith.com/voii.mobileapptest/api/sysdbmobile/"; //mobile test
 //var BaseURLApp = "https://mobileapps.voith.com/voithmobileapi/sys/api/sysdbmobile/"; //mobile prod
-var ENV = "WEB"; //Switch between mobile app and web app (Set for web:WEB and mobile:APP)
+var ENV = "APP"; //Switch between mobile app and web app (Set for web:WEB and mobile:APP)
 
 if (ENV != "APP" && (myApp.device.iphone || myApp.device.ipad || myApp.device.android)) {
     ENV = "APP";
+}
+if (ENV == "WEB") {
+    BaseURLApp = BaseURLWeb;
 }
 
 /*
@@ -128,6 +131,7 @@ $$('.close-panel').on('click', function (e) {
 //    }).trigger();
 //}
 //else 
+
 
 {
     myApp.onPageInit('index', function (e) {
