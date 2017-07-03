@@ -19,7 +19,7 @@ var BaseURLWeb = "https://vpvitterdevcon.voith.net/api/sysdbmobile/"; //vpn
 var BaseURLApp = "https://vpvitterdevconvpn.voith.net/api/sysdbmobile/"; //vpn mobile test
 //var BaseURLApp = "https://dev-mobileapps.voith.com/voii.mobileapptest/api/sysdbmobile/"; //mobile test
 //var BaseURLApp = "https://mobileapps.voith.com/voithmobileapi/sys/api/sysdbmobile/"; //mobile prod
-var ENV = "APP"; //Switch between mobile app and web app (Set for web:WEB and mobile:APP)
+var ENV = "WEB"; //Switch between mobile app and web app (Set for web:WEB and mobile:APP)
 
 if (ENV != "APP" && (myApp.device.iphone || myApp.device.ipad || myApp.device.android)) {
     ENV = "APP";
@@ -36,10 +36,14 @@ var APP_PROFILE = new Object();
 APP_PROFILE.CurrentUser = APP_KEY + "_cUser";
 APP_PROFILE.WindowsUser = APP_KEY + "_wUser";
 APP_PROFILE.WindowsPass = APP_KEY + "_wPass";
+APP_PROFILE.RegionalSummary = APP_KEY + "_RegionalSummary";
+APP_PROFILE.Device = APP_KEY + "_Device";
+APP_PROFILE.FavoriteDevices = APP_KEY + "_FavoriteDevices";
 
 var APP_MESSAGE = new Object();
 APP_MESSAGE.NetworkNotAbailable = "Network is not available.";
 APP_MESSAGE.LoginFailed = "Login failed.";
+APP_MESSAGE.LoginNotFound = "Login not found.";
 
 function getCurrentUser() {
     var cUser = localStorage.getItem(APP_PROFILE.CurrentUser);
@@ -56,17 +60,26 @@ function getCurrentUser() {
 
 var CurrentUser = getCurrentUser();
 
-function GetDataAndRender(urlAddress, fnRenderData, Arg1) {
+//myApp.onPageInit('index', function (e) {
+//    if (typeof e != 'undefined' && e.from == "left")
+//        return;
+
+//    if (CurrentUser == null || CurrentUser.UserID == null || CurrentUser.UserID == '' || Number(CurrentUser.UserID) <= 0) {
+//        myApp.mainView.router.loadPage('login.html');
+//    }
+//}).trigger();
+
+function GetDataAndRender(urlAddress, fnRenderData, Arg1, sLocalStoreKey) {
     myApp.showIndicator();
-    //if (sLocalStoreKey != null && localStorage.getItem(sLocalStoreKey) != null && localStorage.getItem(sLocalStoreKey) != '') {
-    //    var result = JSON.parse(localStorage.getItem(sLocalStoreKey));
-    //    fnRenderData(result, Arg1);
-    //    myApp.hideIndicator();
-    //}
+    if (sLocalStoreKey != null && localStorage.getItem(sLocalStoreKey) != null && localStorage.getItem(sLocalStoreKey) != '') {
+        var result = JSON.parse(localStorage.getItem(sLocalStoreKey));
+        fnRenderData(result, Arg1);
+        myApp.hideIndicator();
+    }
     if (navigator.onLine) {
         var _user = localStorage.getItem(APP_PROFILE.WindowsUser);
         var _pass = localStorage.getItem(APP_PROFILE.WindowsPass)
-        //myApp.alert(_user + _pass);
+
         $.ajax({
             username: _user,
             password: _pass,
@@ -75,13 +88,13 @@ function GetDataAndRender(urlAddress, fnRenderData, Arg1) {
             url: urlAddress,
             type: "GET",
             dataType: 'json',
-            beforeSend: function (xhr) {
-                xhr.setRequestHeader("Authorization", "Basic " + btoa(_user + ":" + _pass));
-            },
+            //beforeSend: function (xhr) {
+            //    xhr.setRequestHeader("Authorization", "Basic " + btoa(_user + ":" + _pass));
+            //},
             success: function (result) {
-                ////Save to Local Store
-                //if (sLocalStoreKey != null)
-                //    localStorage.setItem(sLocalStoreKey, JSON.stringify(result));
+                //Save to Local Store
+                if (sLocalStoreKey != null)
+                    localStorage.setItem(sLocalStoreKey, JSON.stringify(result));
                 fnRenderData(result, Arg1);
                 myApp.hideIndicator();
             },
@@ -100,62 +113,25 @@ function GetDataAndRender(urlAddress, fnRenderData, Arg1) {
     }
 }
 
-$$('.close-panel').on('click', function (e) {
-    if (e.srcElement.tabIndex == 1) {
-        GetDeviceSummary(false);
-    }
-    else if (e.srcElement.tabIndex == 2) {
-        GetDeviceSummary(true);
-    }
-});
+//$$('.close-panel').on('click', function (e) {
+//    if (e.srcElement.tabIndex == 1) {
+//        GetDeviceSummary(false);
+//    }
+//    else if (e.srcElement.tabIndex == 2) {
+//        GetDeviceSummary(true);
+//    }
+//});
 
-//if (ENV == "WEB") {
-//    BaseURLApp = BaseURLWeb;
-//    myApp.onPageInit('index', function (e) {
-//        if (typeof e != 'undefined' && e.from == "left")
-//            return;
-
-//        if (CurrentUser == null || CurrentUser.UserID == null || CurrentUser.UserID == '' || Number(CurrentUser.UserID) <= 0) {
-//            function RenderAfterLogin(result) {
-//                if (result != null && result.UserID != null && Number(result.UserID) > 0) {
-//                    localStorage.setItem(APP_PROFILE.CurrentUser, JSON.stringify(result));
-//                    CurrentUser = getCurrentUser();
-//                }
-//                else {
-//                    myApp.alert(APP_MESSAGE.LoginFailed);
-//                }
-//            }
-//            var urlLogin = BaseURLApp + "login";
-//            GetDataAndRender(urlLogin, RenderAfterLogin);
-//        }
-//    }).trigger();
-//}
-//else 
-
-
-{
-    myApp.onPageInit('index', function (e) {
-       if (typeof e != 'undefined' && e.from == "left")
-            return;
-
-        if (CurrentUser == null || CurrentUser.UserID == null || CurrentUser.UserID == '' || Number(CurrentUser.UserID) <= 0) {
-            myApp.mainView.router.loadPage('login.html');
-        }
-    }).trigger();
-}
-
-
-
-/* ===== Login screen page events ===== */
-myApp.onPageInit('login-screen-embedded', function (page) {
-    $$(page.container).find('.list-button').on('click', function () {
-        var username = $$(page.container).find('input[name="username"]').val();
-        var password = $$(page.container).find('input[name="password"]').val();
-        myApp.alert('Username: ' + username + ', password: ' + password, function () {
-            mainView.router.back();
-        });
-    });
-});
+///* ===== Login screen page events ===== */
+//myApp.onPageInit('login-screen-embedded', function (page) {
+//    $$(page.container).find('.list-button').on('click', function () {
+//        var username = $$(page.container).find('input[name="username"]').val();
+//        var password = $$(page.container).find('input[name="password"]').val();
+//        myApp.alert('Username: ' + username + ', password: ' + password, function () {
+//            mainView.router.back();
+//        });
+//    });
+//});
 
 // In page events:
 $$(document).on('pageInit', function (e) {
@@ -174,7 +150,7 @@ $$(document).on('pageInit', function (e) {
                     "crossDomain": true,
                     "url": BaseURLApp + "login",
                     "method": "GET",
-                    "cash": true,
+                    "cashe": true,
                     "headers": {
                         //"cache-control":"no-cache"
                     }
@@ -190,7 +166,7 @@ $$(document).on('pageInit', function (e) {
 
                     mainView.router.loadPage("index.html?ts=" + Date.now());
                 }).fail(function () {
-                    alert("login not found : " + settings.url);
+                    myApp.alert(APP_MESSAGE.LoginNotFound);
                 });
             });
             break;
@@ -261,12 +237,12 @@ function getParmFromUrl(url, parm) {
 
 function GetDeviceSummary(isFavoriteOnly) {
     var urlString = BaseURLApp + 'Getdevices?isFavoriteOnly=' + isFavoriteOnly + '&pUserID=' + CurrentUser.UserID;
-    GetDataAndRender(urlString, RenderDevices);
+    GetDataAndRender(urlString, RenderDevices, null, APP_PROFILE.FavoriteDevices + '_' + isFavoriteOnly);
 }
 
 function GetDeviceByFilter(pName, pDescription, pClass, pModel, pITorg, pAdminTeam, pLansite) {
     var urlString = BaseURLApp + 'GetDevicesByFilter?pDeviceName=' + pName + '&pDescription=' + pDescription + '&pDeviceClass=' + pClass + '&pDeviceModel=' + pModel + '&pRespITOrg=' + pITorg + '&pAdminTeam=' + pAdminTeam + '&pLansite=' + pLansite + '&pUserID=' + CurrentUser.UserID;
-    GetDataAndRender(urlString, RenderDevices);
+    GetDataAndRender(urlString, RenderDevices, null, null);
 }
 
 function RenderDevices(data) {
@@ -307,7 +283,7 @@ function RenderDevices(data) {
 
 function GetDeviceTabs(deviceId, deviceName) {
     var urlString = BaseURLApp + 'GetDeviceTabs?deviceID=' + deviceId + '&deviceName=' + deviceName;
-    GetDataAndRender(urlString, RenderDeviceTabs, deviceName);
+    GetDataAndRender(urlString, RenderDeviceTabs, deviceName, APP_PROFILE.Device + '_' + deviceId);
 }
 
 function RenderDeviceTabs(data, deviceName) {
@@ -325,7 +301,7 @@ function RenderDeviceTabs(data, deviceName) {
 
 function GetSelectedTabInfo(deviceID, tabID) {
     var urlString = BaseURLApp + 'GetTabInfoByDeviceIDAndTabID?deviceID=' + deviceID + '&tabID=' + tabID;
-    GetDataAndRender(urlString, RenderTabInfo);
+    GetDataAndRender(urlString, RenderTabInfo, deviceName, APP_PROFILE.Device + '_' + deviceId + '_' + tabID);
 }
 
 function RenderTabInfo(data) {
@@ -363,7 +339,7 @@ function RenderTabInfo(data) {
 
 function GetRegionalSummary() {
     var urlString = BaseURLApp + 'GetDeviceRegionalSummary';
-    GetDataAndRender(urlString, RenderRegionalSummary);
+    GetDataAndRender(urlString, RenderRegionalSummary, null, APP_PROFILE.RegionalSummary);
 }
 
 function RenderRegionalSummary(data) {
@@ -400,7 +376,7 @@ function RenderRegionalSummary(data) {
 
 function GetSearchData() {
     var urlString = BaseURLApp + 'GetSearchData';
-    GetDataAndRender(urlString, RenderRegionalSummary);
+    GetDataAndRender(urlString, RenderRegionalSummary, null, null);
 }
 
 function AddAsFavorite(deviceID, isFavorite) {
@@ -412,7 +388,7 @@ function AddAsFavorite(deviceID, isFavorite) {
     var favorite = isFavrt ? 'true' : 'false';
 
     var urlString = BaseURLApp + 'AddAsFavorite?pdeviceID=' + deviceID + '&pIsFavorite=' + favorite + '&pUserID=' + CurrentUser.UserID;
-    GetDataAndRender(urlString, SetAsFavorite, deviceArray);
+    GetDataAndRender(urlString, SetAsFavorite, deviceArray, null);
 
     //SaveAsFavorite(deviceID, isFavrt);
 }
