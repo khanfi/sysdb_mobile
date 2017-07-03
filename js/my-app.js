@@ -43,7 +43,7 @@ APP_PROFILE.FavoriteDevices = APP_KEY + "_FavoriteDevices";
 var APP_MESSAGE = new Object();
 APP_MESSAGE.NetworkNotAbailable = "Network is not available.";
 APP_MESSAGE.LoginFailed = "Login failed.";
-APP_MESSAGE.LoginNotFound = "Login not found.";
+APP_MESSAGE.UserNotFound = "User not found. Please Sign In.";
 
 function getCurrentUser() {
     var cUser = localStorage.getItem(APP_PROFILE.CurrentUser);
@@ -70,46 +70,51 @@ var CurrentUser = getCurrentUser();
 //}).trigger();
 
 function GetDataAndRender(urlAddress, fnRenderData, Arg1, sLocalStoreKey) {
-    myApp.showIndicator();
-    if (sLocalStoreKey != null && localStorage.getItem(sLocalStoreKey) != null && localStorage.getItem(sLocalStoreKey) != '') {
-        var result = JSON.parse(localStorage.getItem(sLocalStoreKey));
-        fnRenderData(result, Arg1);
-        myApp.hideIndicator();
+    if (!(CurrentUser != null && CurrentUser.UserID != null && CurrentUser.UserID > 0)) {
+        myApp.alert(APP_MESSAGE.UserNotFound);
     }
-    if (navigator.onLine) {
-        var _user = localStorage.getItem(APP_PROFILE.WindowsUser);
-        var _pass = localStorage.getItem(APP_PROFILE.WindowsPass)
+    else {
+        myApp.showIndicator();
+        if (sLocalStoreKey != null && localStorage.getItem(sLocalStoreKey) != null && localStorage.getItem(sLocalStoreKey) != '') {
+            var result = JSON.parse(localStorage.getItem(sLocalStoreKey));
+            fnRenderData(result, Arg1);
+            myApp.hideIndicator();
+        }
+        if (navigator.onLine) {
+            var _user = localStorage.getItem(APP_PROFILE.WindowsUser);
+            var _pass = localStorage.getItem(APP_PROFILE.WindowsPass)
 
-        $.ajax({
-            username: _user,
-            password: _pass,
-            async: true,
-            crossDomain: true,
-            url: urlAddress,
-            type: "GET",
-            dataType: 'json',
-            //beforeSend: function (xhr) {
-            //    xhr.setRequestHeader("Authorization", "Basic " + btoa(_user + ":" + _pass));
-            //},
-            success: function (result) {
-                //Save to Local Store
-                if (sLocalStoreKey != null)
-                    localStorage.setItem(sLocalStoreKey, JSON.stringify(result));
-                fnRenderData(result, Arg1);
-                myApp.hideIndicator();
-            },
-            error: function (xhr, status, error) {
-                myApp.hideIndicator();
+            $.ajax({
+                username: _user,
+                password: _pass,
+                async: true,
+                crossDomain: true,
+                url: urlAddress,
+                type: "GET",
+                dataType: 'json',
+                //beforeSend: function (xhr) {
+                //    xhr.setRequestHeader("Authorization", "Basic " + btoa(_user + ":" + _pass));
+                //},
+                success: function (result) {
+                    //Save to Local Store
+                    if (sLocalStoreKey != null)
+                        localStorage.setItem(sLocalStoreKey, JSON.stringify(result));
+                    fnRenderData(result, Arg1);
+                    myApp.hideIndicator();
+                },
+                error: function (xhr, status, error) {
+                    myApp.hideIndicator();
 
-                if (!navigator.onLine) {
-                    myApp.alert(APP_MESSAGE.NetworkNotAbailable);
-                } else {
-                    myApp.alert(status  + '\n' + error + '\n' + urlAddress);
+                    if (!navigator.onLine) {
+                        myApp.alert(APP_MESSAGE.NetworkNotAbailable);
+                    } else {
+                        myApp.alert(status + '\n' + error + '\n' + urlAddress);
+                    }
                 }
-            }
-        });
-    } else {
-        alert(APP_MESSAGE.NetworkNotAbailable);
+            });
+        } else {
+            myApp.alert(APP_MESSAGE.NetworkNotAbailable);
+        }
     }
 }
 
@@ -166,7 +171,7 @@ $$(document).on('pageInit', function (e) {
 
                     mainView.router.loadPage("index.html?ts=" + Date.now());
                 }).fail(function () {
-                    myApp.alert(APP_MESSAGE.LoginNotFound);
+                    myApp.alert(APP_MESSAGE.LoginFailed);
                 });
             });
             break;
@@ -251,32 +256,35 @@ function RenderDevices(data) {
         localStorage.setItem("devices", JSON.stringify(data));
     $$("#ulDevices").html('');
     var strHtml = '';
+
     $$.each(data, function (i) {
-        strHtml += '<li>';
-        strHtml += '<a href="DeviceTabs.html?ID=' + data[i]["CI_ID"] + '&Name=' + data[i]["Name"] + '&desc=' + data[i]["Description"] + '" class="item-link">';
-        strHtml += '<div class="item-inner">'
-        strHtml += '<div class="item-title-row">'
-        strHtml += '<div class="item-title color-voith-blue">&nbsp;&nbsp;&nbsp;&nbsp;' + data[i]["Name"] + '</div></div>';
-        strHtml += '<div class="item-after font12">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + data[i]["Description"] + '</div>';
-        strHtml += '<div class="item-title-row">'
-        strHtml += '<div class="item-subtitle align:left list-discription"></div></div>';
-        strHtml += '<div class="item-after font12">';
-        strHtml += '<span class="font11">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + data[i]["Lansite"] + ' </span>';
-        strHtml += '<span class="vertical-seprator font10"></span>';
-        strHtml += '<span class="font11">' + data[i]["Organization"] + ' </span>';
-        strHtml += '<span class="vertical-seprator font10"></span>';
-        strHtml += '<span class="font11">' + data[i]["LastChanged"] + ' </span>';
-        strHtml += '<span class="vertical-seprator font10"></span>';
+        var strFavorite = '';
         var isFavorite = data[i]["IsFavorite"];
         if (!isFavorite) {
-            strHtml += '<span><a id="linkFavorite' + data[i]["CI_ID"] + '" href="#" onclick="AddAsFavorite(' + data[i]["CI_ID"] + ',' + isFavorite + ')"><i id="favoriteIcon' + data[i]["CI_ID"] + '" class="icon toolbar-demo-icon-whiteStar-inline"></i></a></span>';
+            strFavorite = '&nbsp; <a id="linkFavorite' + data[i]["CI_ID"] + '" href="#" onclick="AddAsFavorite(' + data[i]["CI_ID"] + ',' + isFavorite + ')"><i id="favoriteIcon' + data[i]["CI_ID"] + '" class="icon toolbar-demo-icon-whiteStar-inline"></i></a>';
         }
         else {
-            strHtml += '<span><a id="linkFavorite' + data[i]["CI_ID"] + '" href="#" onclick="AddAsFavorite(' + data[i]["CI_ID"] + ',' + isFavorite + ')"><i id="favoriteIcon' + data[i]["CI_ID"] + '" class="icon toolbar-demo-icon-yellowStar-inline"></i></a></span>';
+            strFavorite = '&nbsp; <a id="linkFavorite' + data[i]["CI_ID"] + '" href="#" onclick="AddAsFavorite(' + data[i]["CI_ID"] + ',' + isFavorite + ')"><i id="favoriteIcon' + data[i]["CI_ID"] + '" class="icon toolbar-demo-icon-yellowStar-inline"></i></a>';
         }
-        strHtml += '</div></div></a>';
-        strHtml += '</li>'
+
+        strHtml += '<li><a href="DeviceTabs.html?ID=' + data[i]["CI_ID"] + '&Name=' + data[i]["Name"] + '&desc=' + data[i]["Description"] + '" class="item-link">';
+        strHtml += '<div class="item-content">';
+        strHtml += '    <div class="item-media">';
+        //strHtml += strFavorite;
+        strHtml += '    </div>';
+        strHtml += '    <div class="item-inner">'
+        strHtml += '        <div class="item-title-row">'
+        strHtml += '            <div class="item-title">' + data[i]["Name"] + '</div>';
+        strHtml += '        </div>';
+        strHtml += '        <div class="item-subtitle">' + data[i]["Lansite"] + ' | ' + data[i]["Organization"] + ' | ' + data[i]["LastChanged"] + '</div>';
+        strHtml += '        <div class="item-after">' + data[i]["Description"] ;
+        strHtml += strFavorite;
+        strHtml += '        </div>';
+        strHtml += '    </div>';
+        strHtml += '</div>';
+        strHtml += '</a></li>';
     });
+
     $$("#ulDevices").html(strHtml);
     localStorage.setItem("devicePageSummaryStr", strHtml);
 }
@@ -301,7 +309,7 @@ function RenderDeviceTabs(data, deviceName) {
 
 function GetSelectedTabInfo(deviceID, tabID) {
     var urlString = BaseURLApp + 'GetTabInfoByDeviceIDAndTabID?deviceID=' + deviceID + '&tabID=' + tabID;
-    GetDataAndRender(urlString, RenderTabInfo, deviceName, APP_PROFILE.Device + '_' + deviceId + '_' + tabID);
+    GetDataAndRender(urlString, RenderTabInfo, null, APP_PROFILE.Device + '_' + deviceID + '_' + tabID);
 }
 
 function RenderTabInfo(data) {

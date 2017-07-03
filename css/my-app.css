@@ -1,1 +1,15 @@
 	/* css*/
+
+i.toolbar-demo-icon-whiteStar-inline {
+    width: 18px;
+    height: 18px;
+    padding: -5px 0px 0px -15px;
+    background-image: url(../img/white_star.png);
+}
+
+i.toolbar-demo-icon-yellowStar-inline {
+    width: 18px;
+    height: 18px;
+    padding: -5px 0px 0px -15px;
+    background-image: url(../img/yellow_star.png);
+}
