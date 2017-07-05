@@ -102,8 +102,8 @@ function GetDataAndRender(urlAddress, fnRenderData, Arg1, sLocalStoreKey, userna
             }
 
             $.ajax({
-                username: username,
-                password: password,
+     //           username: username,
+//                password: password,
                 async: true,
                 crossDomain: true,
                 url: urlAddress,
