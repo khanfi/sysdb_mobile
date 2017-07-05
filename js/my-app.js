@@ -102,8 +102,8 @@ function GetDataAndRender(urlAddress, fnRenderData, Arg1, sLocalStoreKey, userna
             }
 
             $.ajax({
-                username: username,
-                password: password,
+                //username: username,
+                //password: password,
                 async: true,
                 crossDomain: true,
                 url: urlAddress,
@@ -125,7 +125,7 @@ function GetDataAndRender(urlAddress, fnRenderData, Arg1, sLocalStoreKey, userna
                     if (!navigator.onLine) {
                         myApp.alert(APP_MESSAGE.NetworkNotAbailable);
                     } else {
-                        myApp.alert(error + '\n' + urlAddress);
+                        myApp.alert(status + '\n' + error + '\n' + urlAddress);
                     }
                 }
             });
