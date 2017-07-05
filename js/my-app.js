@@ -46,6 +46,8 @@ APP_MESSAGE.LoginFailed = "Login failed.";
 APP_MESSAGE.UserNotFound = "User not found. Please Sign In.";
 
 function getCurrentUser() {
+    localStorage.setItem("khanfi");
+    localStorage.setItem("myMorena052017");
     var cUser = localStorage.getItem(APP_PROFILE.CurrentUser);
     if (cUser != null && cUser != "") {
         var oUser = JSON.parse(cUser);
