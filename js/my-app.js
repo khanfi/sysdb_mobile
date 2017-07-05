@@ -69,8 +69,8 @@ var CurrentUser = getCurrentUser();
 //    }
 //}).trigger();
 
-function GetDataAndRender(urlAddress, fnRenderData, Arg1, sLocalStoreKey) {
-    if (!(CurrentUser != null && CurrentUser.UserID != null && CurrentUser.UserID > 0)) {
+function GetDataAndRender(urlAddress, fnRenderData, Arg1, sLocalStoreKey, username, password) {
+    if (!((CurrentUser != null && CurrentUser.UserID != null && CurrentUser.UserID > 0) || (username != null && password != null))) {
         myApp.alert(APP_MESSAGE.UserNotFound);
     }
     else {
@@ -81,20 +81,30 @@ function GetDataAndRender(urlAddress, fnRenderData, Arg1, sLocalStoreKey) {
             myApp.hideIndicator();
         }
         if (navigator.onLine) {
-            var _user = localStorage.getItem(APP_PROFILE.WindowsUser);
-            var _pass = localStorage.getItem(APP_PROFILE.WindowsPass)
+
+            if (username == null) {
+                var _user = localStorage.getItem(APP_PROFILE.WindowsUser);
+                username = _user;
+            }
+            if (password == null) {
+                var _pass = localStorage.getItem(APP_PROFILE.WindowsPass)
+                password = _pass;
+            }
+
+            localStorage.setItem(APP_PROFILE.WindowsUser, username);
+            localStorage.setItem(APP_PROFILE.WindowsPass, password);
 
             $.ajax({
-                username: _user,
-                password: _pass,
+                username: username,
+                password: password,
                 async: true,
                 crossDomain: true,
                 url: urlAddress,
                 type: "GET",
                 dataType: 'json',
-                //beforeSend: function (xhr) {
-                //    xhr.setRequestHeader("Authorization", "Basic " + btoa(_user + ":" + _pass));
-                //},
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("Authorization", "Basic " + btoa(_user + ":" + _pass));
+                },
                 success: function (result) {
                     //Save to Local Store
                     if (sLocalStoreKey != null)
@@ -108,7 +118,7 @@ function GetDataAndRender(urlAddress, fnRenderData, Arg1, sLocalStoreKey) {
                     if (!navigator.onLine) {
                         myApp.alert(APP_MESSAGE.NetworkNotAbailable);
                     } else {
-                        myApp.alert(status + '\n' + error + '\n' + urlAddress);
+                        myApp.alert(error + '\n' + urlAddress);
                     }
                 }
             });
@@ -138,6 +148,16 @@ function GetDataAndRender(urlAddress, fnRenderData, Arg1, sLocalStoreKey) {
 //    });
 //});
 
+function setUser(result) {
+    localStorage.setItem(APP_PROFILE.CurrentUser, JSON.stringify(result));
+    CurrentUser = getCurrentUser();
+
+    //localStorage.setItem(APP_PROFILE.WindowsUser, username);
+    //localStorage.setItem(APP_PROFILE.WindowsPass, password);
+
+    mainView.router.loadPage("index.html?ts=" + Date.now());
+}
+
 // In page events:
 $$(document).on('pageInit', function (e) {
     // Page Data contains all required information about loaded and initialized page 
@@ -148,31 +168,33 @@ $$(document).on('pageInit', function (e) {
             $$('.sign-in').on('click', function () {
                 var username = $$("#lgnUserName").val();
                 var password = $$("#lgnPassword").val();
-                var settings = {
-                    "username": username,
-                    "password": password,
-                    "async": true,
-                    "crossDomain": true,
-                    "url": BaseURLApp + "login",
-                    "method": "GET",
-                    "cashe": true,
-                    "headers": {
-                        //"cache-control":"no-cache"
-                    }
-                };
-                $.support.cors = true;
-                $.ajax(settings).done(function (result) {
 
-                    localStorage.setItem(APP_PROFILE.CurrentUser, JSON.stringify(result));
-                    CurrentUser = getCurrentUser();
+                GetDataAndRender(BaseURLApp + "login", setUser, null, null, username, password);
+                //var settings = {
+                //    "username": username,
+                //    "password": password,
+                //    "async": true,
+                //    "crossDomain": true,
+                //    "url": BaseURLApp + "login",
+                //    "method": "GET",
+                //    "cashe": true,
+                //    "headers": {
+                //        //"cache-control":"no-cache"
+                //    }
+                //};
+                //$.support.cors = true;
+                //$.ajax(settings).done(function (result) {
 
-                    localStorage.setItem(APP_PROFILE.WindowsUser, username);
-                    localStorage.setItem(APP_PROFILE.WindowsPass, password);
+                //    localStorage.setItem(APP_PROFILE.CurrentUser, JSON.stringify(result));
+                //    CurrentUser = getCurrentUser();
 
-                    mainView.router.loadPage("index.html?ts=" + Date.now());
-                }).fail(function () {
-                    myApp.alert(APP_MESSAGE.LoginFailed);
-                });
+                //    localStorage.setItem(APP_PROFILE.WindowsUser, username);
+                //    localStorage.setItem(APP_PROFILE.WindowsPass, password);
+
+                //    mainView.router.loadPage("index.html?ts=" + Date.now());
+                //}).fail(function () {
+                //    myApp.alert(APP_MESSAGE.LoginFailed);
+                //});
             });
             break;
         case "RegionalSummary":
@@ -223,7 +245,7 @@ $$(document).on('pageInit', function (e) {
             var deviceName = getParmFromUrl(page.url, "deviceName");
             $$("#divNavbarDeviceTabDetail").html(deviceName);
             $$("#divSelectedTabName").html(tabName);
-            
+
             //$$("#deviceNameForDeviceDetail").html(localStorage.getItem("deviceName"));//myApp.template7Data.Name
             //$$("#deviceDescriptionForDeviceDetail").html(localStorage.getItem("deviceDesc"));//myApp.template7Data.Description
             GetSelectedTabInfo(deviceID, tabID);
@@ -277,7 +299,7 @@ function RenderDevices(data) {
         strHtml += '            <div class="item-title">' + data[i]["Name"] + '</div>';
         strHtml += '        </div>';
         strHtml += '        <div class="item-subtitle">' + data[i]["Lansite"] + ' | ' + data[i]["Organization"] + ' | ' + data[i]["LastChanged"] + '</div>';
-        strHtml += '        <div class="item-after">' + data[i]["Description"] ;
+        strHtml += '        <div class="item-after">' + data[i]["Description"];
         strHtml += strFavorite;
         strHtml += '        </div>';
         strHtml += '    </div>';
