@@ -95,8 +95,8 @@ function GetDataAndRender(urlAddress, fnRenderData, Arg1, sLocalStoreKey, userna
             localStorage.setItem(APP_PROFILE.WindowsPass, password);
 
             $.ajax({
-                username: username,
-                password: password,
+                //username: username,
+                //password: password,
                 async: true,
                 crossDomain: true,
                 url: urlAddress,
