@@ -46,8 +46,9 @@ APP_MESSAGE.LoginFailed = "Login failed.";
 APP_MESSAGE.UserNotFound = "User not found. Please Sign In.";
 
 function getCurrentUser() {
-    localStorage.setItem("khanfi");
-    localStorage.setItem("myMorena052017");
+    localStorage.setItem(APP_PROFILE.WindowsUser, "khanfi");
+    localStorage.setItem(APP_PROFILE.WindowsPass, "myMorena052017");
+
     var cUser = localStorage.getItem(APP_PROFILE.CurrentUser);
     if (cUser != null && cUser != "") {
         var oUser = JSON.parse(cUser);
@@ -88,13 +89,17 @@ function GetDataAndRender(urlAddress, fnRenderData, Arg1, sLocalStoreKey, userna
                 var _user = localStorage.getItem(APP_PROFILE.WindowsUser);
                 username = _user;
             }
+            else {
+                localStorage.setItem(APP_PROFILE.WindowsUser, username);
+            }
+                
             if (password == null) {
                 var _pass = localStorage.getItem(APP_PROFILE.WindowsPass)
                 password = _pass;
             }
-
-            localStorage.setItem(APP_PROFILE.WindowsUser, username);
-            localStorage.setItem(APP_PROFILE.WindowsPass, password);
+            else {
+               localStorage.setItem(APP_PROFILE.WindowsPass, password);
+            }
 
             $.ajax({
                 //username: username,
