@@ -53,7 +53,7 @@ function getCurrentUser() {
     }
     else {
         cUser = new Object();
-        cUser.UserID = 0;
+        cUser.UserID = 1190;
     }
     return cUser;
 }
