@@ -3,9 +3,9 @@ var $$ = Dom7;
 
 // Initialize your app
 var myApp = new Framework7({
-    modalTitle: 'SysDB Mobile',
+    modalTitle: 'SYSDB MOBILE',
     animateNavBackIcon: false,
-    preloadPreviousPage: false,
+    preloadPreviousPage: false
 });
 
 // Add main View
@@ -23,12 +23,16 @@ var ENV = "WEB"; //Switch between mobile app and web app (Set for web:WEB and mo
 
 if (ENV != "APP" && (myApp.device.iphone || myApp.device.ipad || myApp.device.android)) {
     ENV = "APP";
+    myApp.alert("You are using " + myApp.device.os + " " + myApp.device.osVersion + " device."
+        + " iphone " + myApp.device.iphone
+        + ", ipad " + myApp.device.ipad
+        + ", android " + myApp.device.android);
 }
+
 if (ENV == "WEB") {
     BaseURLApp = BaseURLWeb;
 }
 
-myApp.alert("You are using " + myApp.device.os + " " + myApp.device.osVersion + " device. " + myApp.device.iphone + myApp.device.ipad + myApp.device.android);
 
 /*
 Local Store Keys
@@ -84,11 +88,11 @@ function GetDataAndRender(urlAddress, fnRenderData, Arg1, sLocalStoreKey, userna
     }
     else {
         myApp.showIndicator();
-        if (sLocalStoreKey != null && localStorage.getItem(sLocalStoreKey) != null && localStorage.getItem(sLocalStoreKey) != '') {
-            var result = JSON.parse(localStorage.getItem(sLocalStoreKey));
-            fnRenderData(result, Arg1);
-            myApp.hideIndicator();
-        }
+        //if (sLocalStoreKey != null && localStorage.getItem(sLocalStoreKey) != null && localStorage.getItem(sLocalStoreKey) != '') {
+        //    var result = JSON.parse(localStorage.getItem(sLocalStoreKey));
+        //    fnRenderData(result, Arg1);
+        //    myApp.hideIndicator();
+        //}
         if (navigator.onLine) {
 
             if (username == null) {
@@ -118,19 +122,19 @@ function GetDataAndRender(urlAddress, fnRenderData, Arg1, sLocalStoreKey, userna
                 url: urlAddress,
                 type: "GET",
                 dataType: 'json',
-                //xhrFields: {
-                //    withCredentials: true
-                //},
-                //beforeSend: function (xhr) {
-                //    xhr.setRequestHeader("Authorization", "Basic " + btoa(username + ":" + username));
-                //},
+                xhrFields: {
+                    withCredentials: true
+                },
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("Authorization", "Basic " + btoa(username + ":" + username));
+                },
                 headers: {
                     "Authorization": "Basic " + btoa(username + ":" + username)
                 },
                 success: function (result) {
-                    //Save to Local Store
-                    if (sLocalStoreKey != null)
-                        localStorage.setItem(sLocalStoreKey, JSON.stringify(result));
+                    ////Save to Local Store
+                    //if (sLocalStoreKey != null)
+                    //    localStorage.setItem(sLocalStoreKey, JSON.stringify(result));
                     fnRenderData(result, Arg1);
                     myApp.hideIndicator();
                 },
