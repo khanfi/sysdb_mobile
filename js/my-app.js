@@ -28,6 +28,8 @@ if (ENV == "WEB") {
     BaseURLApp = BaseURLWeb;
 }
 
+myApp.alert("You are using " + myApp.device.os + " device. " + myApp.device.iphone + myApp.device.ipad + myApp.device.android);
+
 /*
 Local Store Keys
 */
@@ -46,9 +48,6 @@ APP_MESSAGE.LoginFailed = "Login failed.";
 APP_MESSAGE.UserNotFound = "User not found. Please Sign In.";
 
 function getCurrentUser() {
-    localStorage.setItem(APP_PROFILE.WindowsUser, "khanfi");
-    localStorage.setItem(APP_PROFILE.WindowsPass, "myMorena052017");
-
     var cUser = localStorage.getItem(APP_PROFILE.CurrentUser);
     if (cUser != null && cUser != "") {
         var oUser = JSON.parse(cUser);
@@ -56,7 +55,7 @@ function getCurrentUser() {
     }
     else {
         cUser = new Object();
-        cUser.UserID = 1190;
+        cUser.UserID = 0;
     }
     return cUser;
 }
