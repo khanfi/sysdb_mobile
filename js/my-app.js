@@ -28,6 +28,8 @@ if (ENV == "WEB") {
     BaseURLApp = BaseURLWeb;
 }
 
+myApp.alert("You are using " + myApp.device.os + " " + myApp.device.osVersion + " device. " + myApp.device.iphone + myApp.device.ipad + myApp.device.android);
+
 /*
 Local Store Keys
 */
@@ -88,25 +90,29 @@ function GetDataAndRender(urlAddress, fnRenderData, Arg1, sLocalStoreKey, userna
                 var _user = localStorage.getItem(APP_PROFILE.WindowsUser);
                 username = _user;
             }
+            else {
+                localStorage.setItem(APP_PROFILE.WindowsUser, username);
+            }
+                
             if (password == null) {
                 var _pass = localStorage.getItem(APP_PROFILE.WindowsPass)
                 password = _pass;
             }
-
-            localStorage.setItem(APP_PROFILE.WindowsUser, username);
-            localStorage.setItem(APP_PROFILE.WindowsPass, password);
+            else {
+               localStorage.setItem(APP_PROFILE.WindowsPass, password);
+            }
 
             $.ajax({
-                //username: username,
-                //password: password,
+                username: username,
+                password: password,
                 async: true,
                 crossDomain: true,
                 url: urlAddress,
                 type: "GET",
                 dataType: 'json',
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader("Authorization", "Basic " + btoa(username + ":" + username));
-                },
+                //beforeSend: function (xhr) {
+                //    xhr.setRequestHeader("Authorization", "Basic " + btoa(username + ":" + username));
+                //},
                 success: function (result) {
                     //Save to Local Store
                     if (sLocalStoreKey != null)
@@ -120,7 +126,7 @@ function GetDataAndRender(urlAddress, fnRenderData, Arg1, sLocalStoreKey, userna
                     if (!navigator.onLine) {
                         myApp.alert(APP_MESSAGE.NetworkNotAbailable);
                     } else {
-                        myApp.alert(error + '\n' + urlAddress);
+                        myApp.alert(status + '\n' + error + '\n' + urlAddress);
                     }
                 }
             });
