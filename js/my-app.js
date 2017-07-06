@@ -28,7 +28,7 @@ if (ENV == "WEB") {
     BaseURLApp = BaseURLWeb;
 }
 
-myApp.alert("You are using " + myApp.device.os + " device. " + myApp.device.iphone + myApp.device.ipad + myApp.device.android);
+myApp.alert("You are using " + myApp.device.os + " " + myApp.device.osVersion + " device. " + myApp.device.iphone + myApp.device.ipad + myApp.device.android);
 
 /*
 Local Store Keys
