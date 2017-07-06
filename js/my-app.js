@@ -48,8 +48,6 @@ APP_MESSAGE.LoginFailed = "Login failed.";
 APP_MESSAGE.UserNotFound = "User not found. Please Sign In.";
 
 function getCurrentUser() {
-    localStorage.setItem("khanfi");
-    localStorage.setItem("myMorena052017");
     var cUser = localStorage.getItem(APP_PROFILE.CurrentUser);
     if (cUser != null && cUser != "") {
         var oUser = JSON.parse(cUser);
@@ -57,9 +55,15 @@ function getCurrentUser() {
     }
     else {
         cUser = new Object();
-        cUser.UserID = 1190;
+        cUser.UserID = 0;
     }
     return cUser;
+}
+
+function clearStorage() {
+    localStorage.removeItem(APP_PROFILE.RegionalSummary);
+    localStorage.removeItem(APP_PROFILE.Device);
+    localStorage.removeItem(APP_PROFILE.FavoriteDevices);
 }
 
 var CurrentUser = getCurrentUser();
@@ -103,16 +107,16 @@ function GetDataAndRender(urlAddress, fnRenderData, Arg1, sLocalStoreKey, userna
             }
 
             $.ajax({
-                username: username,
-                password: password,
+                //username: username,
+                //password: password,
                 async: true,
                 crossDomain: true,
                 url: urlAddress,
                 type: "GET",
                 dataType: 'json',
-                //beforeSend: function (xhr) {
-                //    xhr.setRequestHeader("Authorization", "Basic " + btoa(username + ":" + username));
-                //},
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("Authorization", "Basic " + btoa(username + ":" + username));
+                },
                 success: function (result) {
                     //Save to Local Store
                     if (sLocalStoreKey != null)
