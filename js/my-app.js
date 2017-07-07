@@ -101,7 +101,15 @@ function GetDataAndRender(urlAddress, fnRenderData, Arg1, sLocalStoreKey, userna
                 password = _pass;
             }
             else {
-               localStorage.setItem(APP_PROFILE.WindowsPass, password);
+                localStorage.setItem(APP_PROFILE.WindowsPass, password);
+            }
+
+            if (myApp.device.android) {
+                $.ajax({
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader("Authorization", "Basic " + btoa(username + ":" + username));
+                    }   
+                });
             }
 
             $.ajax({
