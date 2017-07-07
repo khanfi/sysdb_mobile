@@ -60,15 +60,8 @@ function getCurrentUser() {
     }
     else {
         cUser = new Object();
-        cUser.UserID = 0;
     }
     return cUser;
-}
-
-function clearStorage() {
-    localStorage.removeItem(APP_PROFILE.RegionalSummary);
-    localStorage.removeItem(APP_PROFILE.Device);
-    localStorage.removeItem(APP_PROFILE.FavoriteDevices);
 }
 
 var CurrentUser = getCurrentUser();
@@ -88,11 +81,11 @@ function GetDataAndRender(urlAddress, fnRenderData, Arg1, sLocalStoreKey, userna
     }
     else {
         myApp.showIndicator();
-        //if (sLocalStoreKey != null && localStorage.getItem(sLocalStoreKey) != null && localStorage.getItem(sLocalStoreKey) != '') {
-        //    var result = JSON.parse(localStorage.getItem(sLocalStoreKey));
-        //    fnRenderData(result, Arg1);
-        //    myApp.hideIndicator();
-        //}
+        if (sLocalStoreKey != null && localStorage.getItem(sLocalStoreKey) != null && localStorage.getItem(sLocalStoreKey) != '') {
+            var result = JSON.parse(localStorage.getItem(sLocalStoreKey));
+            fnRenderData(result, Arg1);
+            myApp.hideIndicator();
+        }
         if (navigator.onLine) {
 
             if (username == null) {
@@ -132,9 +125,9 @@ function GetDataAndRender(urlAddress, fnRenderData, Arg1, sLocalStoreKey, userna
                     "Authorization": "Basic " + btoa(username + ":" + username)
                 },
                 success: function (result) {
-                    ////Save to Local Store
-                    //if (sLocalStoreKey != null)
-                    //    localStorage.setItem(sLocalStoreKey, JSON.stringify(result));
+                    //Save to Local Store
+                    if (sLocalStoreKey != null)
+                        localStorage.setItem(sLocalStoreKey, JSON.stringify(result));
                     fnRenderData(result, Arg1);
                     myApp.hideIndicator();
                 },
@@ -209,6 +202,8 @@ $$(document).on('pageInit', function (e) {
                         localStorage.removeItem(itemKey);
                     }
                 });
+                CurrentUser = new Object();
+                mainView.router.back();
             });
 
             // Close login
