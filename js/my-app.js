@@ -225,6 +225,22 @@ $$(document).on('pageInit', function (e) {
                 //    myApp.alert(APP_MESSAGE.LoginFailed);
                 //});
             });
+
+            // Remove username and password
+            $$('.remove-sign-in').on('click', function () {
+                var keys = Object.keys(localStorage);
+                $$.each(keys, function (i) {
+                    var itemKey = keys[i];
+                    if (itemKey.indexOf(APP_KEY) >= 0) {
+                        localStorage.removeItem(itemKey);
+                    }
+                });
+            });
+
+            // Close login
+            $$('.close-login').on('click', function () {
+                mainView.router.back();
+            });
             break;
         case "RegionalSummary":
             if (page.from == "right")
