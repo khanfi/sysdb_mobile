@@ -106,52 +106,68 @@ function GetDataAndRender(urlAddress, fnRenderData, Arg1, sLocalStoreKey, userna
 
             if (myApp.device.android) {
                 $.ajax({
+                    async: true,
+                    crossDomain: true,
+                    url: urlAddress,
+                    type: "GET",
+                    dataType: 'json',
                     beforeSend: function (xhr) {
                         xhr.setRequestHeader("Authorization", "Basic " + btoa(username + ":" + username));
-                    }   
+                    },
+                    success: function (result) {
+                        //Save to Local Store
+                        if (sLocalStoreKey != null)
+                            localStorage.setItem(sLocalStoreKey, JSON.stringify(result));
+                        fnRenderData(result, Arg1);
+                        myApp.hideIndicator();
+                    },
+                    error: function (xhr, status, error) {
+                        myApp.hideIndicator();
+
+                        if (xhr.status === 401 || xhr.status === 0) {
+                            myApp.alert(APP_MESSAGE.AuthenticationFailed);
+                        }
+                        else if (!navigator.onLine) {
+                            myApp.alert(APP_MESSAGE.NetworkNotAbailable);
+                        } else {
+                            myApp.alert(status + '\n' + error + '\n' + urlAddress);
+                        }
+                    }
                 });
             }
+            else if (myApp.device.iphone || myApp.device.ipad) {
+                $.ajax({
+                    username: username,
+                    password: password,
+                    async: true,
+                    crossDomain: true,
+                    url: urlAddress,
+                    type: "GET",
+                    dataType: 'json',
+                    //headers: {
+                    //    "Authorization": "Basic " + btoa(username + ":" + username)
+                    //},
+                    success: function (result) {
+                        //Save to Local Store
+                        if (sLocalStoreKey != null)
+                            localStorage.setItem(sLocalStoreKey, JSON.stringify(result));
+                        fnRenderData(result, Arg1);
+                        myApp.hideIndicator();
+                    },
+                    error: function (xhr, status, error) {
+                        myApp.hideIndicator();
 
-            $.ajax({
-                withCredentials: true,
-                username: username,
-                password: password,
-                useDefaultXhrHeader: false,
-                disableCaching: true,
-                async: true,
-                crossDomain: true,
-                url: urlAddress,
-                type: "GET",
-                dataType: 'json',
-                xhrFields: {
-                    withCredentials: true
-                },
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader("Authorization", "Basic " + btoa(username + ":" + username));
-                },
-                headers: {
-                    "Authorization": "Basic " + btoa(username + ":" + username)
-                },
-                success: function (result) {
-                    //Save to Local Store
-                    if (sLocalStoreKey != null)
-                        localStorage.setItem(sLocalStoreKey, JSON.stringify(result));
-                    fnRenderData(result, Arg1);
-                    myApp.hideIndicator();
-                },
-                error: function (xhr, status, error) {
-                    myApp.hideIndicator();
-
-                    if (xhr.status === 401 || xhr.status === 0) {
-                        myApp.alert(APP_MESSAGE.AuthenticationFailed);
+                        if (xhr.status === 401 || xhr.status === 0) {
+                            myApp.alert(APP_MESSAGE.AuthenticationFailed);
+                        }
+                        else if (!navigator.onLine) {
+                            myApp.alert(APP_MESSAGE.NetworkNotAbailable);
+                        } else {
+                            myApp.alert(status + '\n' + error + '\n' + urlAddress);
+                        }
                     }
-                    else if (!navigator.onLine) {
-                        myApp.alert(APP_MESSAGE.NetworkNotAbailable);
-                    } else {
-                        myApp.alert(status + '\n' + error + '\n' + urlAddress);
-                    }
-                }
-            });
+                });
+            }
         } else {
             myApp.alert(APP_MESSAGE.NetworkNotAbailable);
         }
