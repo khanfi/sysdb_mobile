@@ -197,36 +197,10 @@ $$(document).on('pageInit', function (e) {
             $$('.sign-in').on('click', function () {
                 var username = $$("#lgnUserName").val();
                 var password = $$("#lgnPassword").val();
-
                 GetDataAndRender(BaseURLApp + "login", setUser, null, null, username, password);
-                //var settings = {
-                //    "username": username,
-                //    "password": password,
-                //    "async": true,
-                //    "crossDomain": true,
-                //    "url": BaseURLApp + "login",
-                //    "method": "GET",
-                //    "cashe": true,
-                //    "headers": {
-                //        //"cache-control":"no-cache"
-                //    }
-                //};
-                //$.support.cors = true;
-                //$.ajax(settings).done(function (result) {
-
-                //    localStorage.setItem(APP_PROFILE.CurrentUser, JSON.stringify(result));
-                //    CurrentUser = getCurrentUser();
-
-                //    localStorage.setItem(APP_PROFILE.WindowsUser, username);
-                //    localStorage.setItem(APP_PROFILE.WindowsPass, password);
-
-                //    mainView.router.loadPage("index.html?ts=" + Date.now());
-                //}).fail(function () {
-                //    myApp.alert(APP_MESSAGE.LoginFailed);
-                //});
             });
 
-            // Remove username and password
+            // Clear local storage
             $$('.remove-sign-in').on('click', function () {
                 var keys = Object.keys(localStorage);
                 $$.each(keys, function (i) {
