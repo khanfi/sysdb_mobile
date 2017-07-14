@@ -13,3 +13,7 @@ i.toolbar-demo-icon-yellowStar-inline {
     padding: -5px 0px 0px -15px;
     background-image: url(../img/yellow_star.png);
 }
+
+.list-block .item-after {
+  color: #ea2a14;
+}

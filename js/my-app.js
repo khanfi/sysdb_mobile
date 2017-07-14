@@ -135,7 +135,7 @@ function GetDataAndRender(urlAddress, fnRenderData, Arg1, sLocalStoreKey, userna
                     }
                 });
             }
-            else if (myApp.device.iphone || myApp.device.ipad) {
+            else { //if (myApp.device.iphone || myApp.device.ipad) {
                 $.ajax({
                     username: username,
                     password: password,
