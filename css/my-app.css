@@ -15,5 +15,14 @@ i.toolbar-demo-icon-yellowStar-inline {
 }
 
 .list-block .item-after {
-  color: #ea2a14;
+  color: #6d6d72;
+  margin-left: 0px;
+}
+
+.list-block .item-subtitle {
+    color: #6d6d72;
+}
+
+.list-block .item-title {
+    color: #2d4275;
 }
