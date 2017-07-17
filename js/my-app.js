@@ -23,10 +23,10 @@ var ENV = "WEB"; //Switch between mobile app and web app (Set for web:WEB and mo
 
 if (ENV != "APP" && (myApp.device.iphone || myApp.device.ipad || myApp.device.android)) {
     ENV = "APP";
-    myApp.alert("You are using " + myApp.device.os + " " + myApp.device.osVersion + " device."
-        + " iphone " + myApp.device.iphone
-        + ", ipad " + myApp.device.ipad
-        + ", android " + myApp.device.android);
+    //myApp.alert("You are using " + myApp.device.os + " " + myApp.device.osVersion + " device."
+    //    + " iphone " + myApp.device.iphone
+    //    + ", ipad " + myApp.device.ipad
+    //    + ", android " + myApp.device.android);
 }
 
 if (ENV == "WEB") {
