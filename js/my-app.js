@@ -104,38 +104,39 @@ function GetDataAndRender(urlAddress, fnRenderData, Arg1, sLocalStoreKey, userna
                 localStorage.setItem(APP_PROFILE.WindowsPass, password);
             }
 
-            if (myApp.device.android) {
-                $.ajax({
-                    async: true,
-                    crossDomain: true,
-                    url: urlAddress,
-                    type: "GET",
-                    dataType: 'json',
-                    beforeSend: function (xhr) {
-                        xhr.setRequestHeader("Authorization", "Basic " + btoa(username + ":" + username));
-                    },
-                    success: function (result) {
-                        //Save to Local Store
-                        if (sLocalStoreKey != null)
-                            localStorage.setItem(sLocalStoreKey, JSON.stringify(result));
-                        fnRenderData(result, Arg1);
-                        myApp.hideIndicator();
-                    },
-                    error: function (xhr, status, error) {
-                        myApp.hideIndicator();
+            //if (myApp.device.android) {
+            //    $.ajax({
+            //        async: true,
+            //        crossDomain: true,
+            //        url: urlAddress,
+            //        type: "GET",
+            //        dataType: 'json',
+            //        beforeSend: function (xhr) {
+            //            xhr.setRequestHeader("Authorization", "Basic " + btoa(username + ":" + username));
+            //        },
+            //        success: function (result) {
+            //            //Save to Local Store
+            //            if (sLocalStoreKey != null)
+            //                localStorage.setItem(sLocalStoreKey, JSON.stringify(result));
+            //            fnRenderData(result, Arg1);
+            //            myApp.hideIndicator();
+            //        },
+            //        error: function (xhr, status, error) {
+            //            myApp.hideIndicator();
 
-                        if (xhr.status === 401 || xhr.status === 0) {
-                            myApp.alert(APP_MESSAGE.AuthenticationFailed);
-                        }
-                        else if (!navigator.onLine) {
-                            myApp.alert(APP_MESSAGE.NetworkNotAbailable);
-                        } else {
-                            myApp.alert(status + '\n' + error + '\n' + urlAddress);
-                        }
-                    }
-                });
-            }
-            else { //if (myApp.device.iphone || myApp.device.ipad) {
+            //            if (xhr.status === 401 || xhr.status === 0) {
+            //                myApp.alert(APP_MESSAGE.AuthenticationFailed);
+            //            }
+            //            else if (!navigator.onLine) {
+            //                myApp.alert(APP_MESSAGE.NetworkNotAbailable);
+            //            } else {
+            //                myApp.alert(status + '\n' + error + '\n' + urlAddress);
+            //            }
+            //        }
+            //    });
+            //}
+            //else
+            { //if (myApp.device.iphone || myApp.device.ipad) {
                 $.ajax({
                     username: username,
                     password: password,
