@@ -50,7 +50,7 @@ var APP_MESSAGE = new Object();
 APP_MESSAGE.NetworkNotAbailable = "Network is not available.";
 APP_MESSAGE.LoginFailed = "Login failed.";
 APP_MESSAGE.UserNotFound = "User not found. Please Sign In.";
-APP_MESSAGE.AuthenticationFailed = "Authentication failed";
+APP_MESSAGE.AuthenticationFailed = "Authentication failed.";
 
 function getCurrentUser() {
     var cUser = localStorage.getItem(APP_PROFILE.CurrentUser);
@@ -145,9 +145,9 @@ function GetDataAndRender(urlAddress, fnRenderData, Arg1, sLocalStoreKey, userna
                     url: urlAddress,
                     type: "GET",
                     dataType: 'json',
-                    //headers: {
-                    //    "Authorization": "Basic " + btoa(username + ":" + username)
-                    //},
+                    headers: {
+                        "Authorization": "Basic " + btoa(username + ":" + username)
+                    },
                     success: function (result) {
                         //Save to Local Store
                         if (sLocalStoreKey != null)
