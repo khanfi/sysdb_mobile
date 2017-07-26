@@ -14,6 +14,16 @@ var mainView = myApp.addView('.view-main', {
     dynamicNavbar: true,
 });
 
+var toastOptions = {
+    //// Callback gets called when toast is hidden
+    //onHide: function () {
+    //    console.log('hidden');
+    //},
+    //// Hide toast after 2 seconds
+    //duration: 2000 
+};
+var toast = myApp.toast('SYSDB MOBILE', '', toastOptions);
+
 //var BaseURLWeb = "http://ndewebtest/voii.mobileapptest/api/sysdbmobile/"; // web
 var BaseURLWeb = "https://vpvitterdevcon.voith.net/api/sysdbmobile/"; //vpn
 var BaseURLApp = "https://vpvitterdevconvpn.voith.net/api/sysdbmobile/"; //vpn mobile test
@@ -76,8 +86,10 @@ var CurrentUser = getCurrentUser();
 //}).trigger();
 
 function GetDataAndRender(urlAddress, fnRenderData, Arg1, sLocalStoreKey, username, password) {
+
     if (!((CurrentUser != null && CurrentUser.UserID != null && CurrentUser.UserID > 0) || (username != null && password != null))) {
-        myApp.alert(APP_MESSAGE.UserNotFound);
+        //myApp.alert(APP_MESSAGE.UserNotFound);
+        toast.show(APP_MESSAGE.UserNotFound);
     }
     else {
         myApp.showIndicator();
@@ -157,20 +169,23 @@ function GetDataAndRender(urlAddress, fnRenderData, Arg1, sLocalStoreKey, userna
                     },
                     error: function (xhr, status, error) {
                         myApp.hideIndicator();
-
+                        
                         if (xhr.status === 401 || xhr.status === 0) {
-                            myApp.alert(APP_MESSAGE.AuthenticationFailed);
+                            //myApp.alert(APP_MESSAGE.AuthenticationFailed);
+                            toast.show(APP_MESSAGE.AuthenticationFailed);
                         }
                         else if (!navigator.onLine) {
-                            myApp.alert(APP_MESSAGE.NetworkNotAbailable);
+                            //myApp.alert(APP_MESSAGE.NetworkNotAbailable);
+                            toast.show(APP_MESSAGE.NetworkNotAbailable);
                         } else {
-                            myApp.alert(status + '\n' + error + '\n' + urlAddress);
+                            //myApp.alert(status + '\n' + error + '\n' + urlAddress);
+                            toast.show(status + '\n' + error + '\n' + urlAddress);
                         }
                     }
                 });
             }
         } else {
-            myApp.alert(APP_MESSAGE.NetworkNotAbailable);
+            toast.show(APP_MESSAGE.NetworkNotAbailable);
         }
     }
 }
