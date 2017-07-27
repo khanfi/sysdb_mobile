@@ -81,9 +81,9 @@
             <!-- Top Navbar-->
             <div class="navbar">
                 <div class="navbar-inner">
-                    <div class="left">
+                    <!--<div class="left">
                         <a href="#" class="open-panel link icon-only"> <i class="f7-icons text-blue-voith">bars</i> </a>
-                    </div>
+                    </div>-->
                     <div class="center">SYSDB MOBILE</div>
                     <div class="right"><em class="f7-icons logo-size">v_logo</em></div>
                 </div>
@@ -108,7 +108,7 @@
                         </div>
                         <div class="list-block">
                             <ul>
-                                <li>
+                                <!--<li>
                                     <a href="RegionalSummary.html" class="item-link item-content">
                                         <div class="item-inner">
                                             <div class="item-title">Start Page</div>
@@ -121,11 +121,18 @@
                                             <div class="item-title">My Devices</div>
                                         </div>
                                     </a>
-                                </li>
+                                </li>-->
                                 <li>
                                     <a href="DeviceSearch.html" class="item-link item-content">
                                         <div class="item-inner">
-                                            <div class="item-title">Search</div>
+                                            <div class="item-title">System Search</div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:scan();" class="item-link item-content">
+                                        <div class="item-inner">
+                                            <div class="item-title">Scan barcode</div>
                                         </div>
                                     </a>
                                 </li>
@@ -144,6 +151,52 @@
     <script type="text/javascript" src="js/my-app.js"></script>
     <!--<script type="text/javascript" src="js/login.js"></script>
     <script type="text/javascript" src="js/secureStorage.js"></script>-->
+    <script type="text/javascript" src="cordova.js"></script>
+    <script>
+        function scan() {
+            cordova.plugins.barcodeScanner.scan(
+                function (result) {
+                    if (!result.cancelled) {
+                        if (result.format == "QR_CODE") {
+                            navigator.notification.prompt("Please enter name of data", function (input) {
+                                var name = input.input1;
+                                var value = result.text;
+                                var data = localStorage.getItem("LocalData");
+                                console.log(data);
+                                data = JSON.parse(data);
+                                data[data.length] = [name, value];
+                                localStorage.setItem("LocalData", JSON.stringify(data));
+                                alert("Done");
+                            });
+                        }
+                    }
+                },
+                function (error) {
+                    alert("Scanning failed: " + error);
+                }
+           );
+        }
+        $(document).on("pagebeforeshow", "#display", function () {
+            $("table#allTable tbody").empty();
+            var data = localStorage.getItem("LocalData");
+            console.log(data);
+            data = JSON.parse(data);
+            var html = "";
+            for (var count = 0; count < data.length; count++) {
+                html = html + "<tr><td>" + data[count][0] + "</td><td><a href='javascript:openURL(\"" + data[count][1] + "\")'>" + data[count][1] + "</a></td></tr>";
+            }
+            $("table#allTable tbody").append(html).closest("table#allTable").table("refresh").trigger("create");
+        });
+        function openURL(url) {
+            window.open(url, '_blank', 'location=yes');
+        }
+        //initialize
+        if (localStorage.getItem("LocalData") == null) {
+            var data = [];
+            data = JSON.stringify(data);
+            localStorage.setItem("LocalData", data);
+        }
+    </script>
 
 </body>
 </html>
