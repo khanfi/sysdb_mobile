@@ -27,7 +27,12 @@
     <preference name="DisallowOverscroll" value="true" />
     <preference name="android-minSdkVersion" value="14" />
 
-    <plugin name="cordova-plugin-whitelist" version="1" />
+  <engines>
+    <engine name="cordova" version=">=1.7.0" />
+    <engine name="cordova-android" version=">=1.8.0" />
+    <engine name="cordova-ios" version=">=1.7.1" />
+  </engines>  
+  <plugin name="phonegap-plugin-barcodescanner" />
   
     <!--<plugin name="cordova-plugin-battery-status" source="npm" spec="1.1.1" />
     <plugin name="cordova-plugin-camera" source="npm" spec="2.1.1" />
