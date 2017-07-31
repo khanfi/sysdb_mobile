@@ -1,40 +1,52 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<widget xmlns="http://www.w3.org/ns/widgets" 
-        xmlns:gap="http://phonegap.com/ns/1.0" 
-        id="com.voith.dsi.sysdb" 
+<widget xmlns="http://www.w3.org/ns/widgets"
+        xmlns:gap="http://phonegap.com/ns/1.0"
+        id="com.voith.dsi.sysdb"
         version="1.0">
-  
+
   <name>sysdb</name>
   <description>System Database (SysDB), Voith Digital Solutions Inc</description>
   <author href="http://www.voith.com" email="firoz.khan@voith.com">Voith Digital Solutions Inc</author>
 
-      <content src="index.html" />
-    <preference name="windows-identity-name" value="voith.dsi.sysdb" />
+  <content src="index.html" />
+  <preference name="windows-identity-name" value="voith.dsi.sysdb" />
 
-    <!-- Windows only preferences -->
-    <preference name="windows-appx-target" value="uap" />
-    <preference name="windows-arch" value="arm" />
-    <preference name="windows-phone-target-version" value="10.0" />
-    <preference name="windows-target-version" value="10.0" />
-    <preference name="Windows.Universal" value="10.0.10240.0" />
-    <preference name="WindowsDefaultUriPrefix" value="ms-appx://" />
-    <preference name="Windows.Mobile-MaxVersionTested" value="10.0.10031.0" />
-    <preference name="Windows.Universal-MinVersion" value="10.0.0.0" />
-    <preference name="WindowsStoreIdentityName" value="voith.dsi.sysdb" />
-    <preference name="WindowsStorePublisherName" value="CN=Voith Digital Solutions Inc, O=Voith Digital Solutions Inc, L=York, S=PA, C=US" />
-    <preference name="WindowsToastCapable" value="true" />
-    <preference name="uap-target-min-version" value="10.0.10586.0" />
-    <preference name="DisallowOverscroll" value="true" />
-    <preference name="android-minSdkVersion" value="14" />
+  <!-- Windows only preferences -->
+  <preference name="windows-appx-target" value="uap" />
+  <preference name="windows-arch" value="arm" />
+  <preference name="windows-phone-target-version" value="10.0" />
+  <preference name="windows-target-version" value="10.0" />
+  <preference name="Windows.Universal" value="10.0.10240.0" />
+  <preference name="WindowsDefaultUriPrefix" value="ms-appx://" />
+  <preference name="Windows.Mobile-MaxVersionTested" value="10.0.10031.0" />
+  <preference name="Windows.Universal-MinVersion" value="10.0.0.0" />
+  <preference name="WindowsStoreIdentityName" value="voith.dsi.sysdb" />
+  <preference name="WindowsStorePublisherName" value="CN=Voith Digital Solutions Inc, O=Voith Digital Solutions Inc, L=York, S=PA, C=US" />
+  <preference name="WindowsToastCapable" value="true" />
+  <preference name="uap-target-min-version" value="10.0.10586.0" />
+  <preference name="DisallowOverscroll" value="true" />
+  <preference name="android-minSdkVersion" value="14" />
 
   <engines>
     <engine name="cordova" version=">=1.7.0" />
     <engine name="cordova-android" version=">=1.8.0" />
     <engine name="cordova-ios" version=">=1.7.1" />
-  </engines>  
-  <plugin name="phonegap-plugin-barcodescanner" />
-  
-    <!--<plugin name="cordova-plugin-battery-status" source="npm" spec="1.1.1" />
+  </engines>
+  <plugin name="phonegap-plugin-barcodescanner" spec="6.0.8" />
+  <config-file target="config.xml" parent="/*">
+    <feature name="BarcodeScanner">
+      <param name="ios-package" value="CDVBarcodeScanner" />
+    </feature>
+  </config-file>
+  <config-file target="res/xml/config.xml" parent="/*">
+    <feature name="BarcodeScanner">
+      <param name="android-package" value="com.phonegap.plugins.barcodescanner.BarcodeScanner"/>
+    </feature>
+  </config-file>
+  <js-module src="www/barcodescanner.js" name="barcodescanner">
+    <clobbers target="plugins.barcodeScanner" />
+  </js-module>
+  <!--<plugin name="cordova-plugin-battery-status" source="npm" spec="1.1.1" />
     <plugin name="cordova-plugin-camera" source="npm" spec="2.1.1" />
     <plugin name="cordova-plugin-media-capture" source="npm" spec="1.2.0" />
     <plugin name="cordova-plugin-console" source="npm" spec="1.0.2" />
@@ -56,8 +68,8 @@
     <plugin name="cordova-plugin-file" spec="4.3.1" />
     <plugin name="cordova-plugin-secure-storage" spec="2.6.3" />-->
 
-    <icon src="icon.png" />
-    <!--<platform name="android">
+  <icon src="icon.png" />
+  <!--<platform name="android">
         <icon density="ldpi" src="www/res/icon/android/drawable-ldpi-icon.png" />
         <icon density="mdpi" src="www/res/icon/android/drawable-mdpi-icon.png" />
         <icon density="hdpi" src="www/res/icon/android/drawable-hdpi-icon.png" />
@@ -77,7 +89,7 @@
         <splash density="port-xxhdpi" src="www/res/screen/android/drawable-port-xxhdpi-screen.png" />
         <splash density="port-xxxhdpi" src="www/res/screen/android/drawable-port-xxxhdpi-screen.png" />
     </platform>-->
-    <!--<platform name="ios">
+  <!--<platform name="ios">
         <icon height="57" platform="ios" src="www/res/icon/ios/icon.png" width="57" />
         <icon height="114" platform="ios" src="www/res/icon/ios/icon@2x.png" width="114" />
         <icon height="40" platform="ios" src="www/res/icon/ios/icon-40.png" width="40" />
@@ -105,12 +117,12 @@
         <splash height="960" platform="ios" src="www/res/screen/ios/Default@2xiphone.png" width="640" />
         <splash height="480" platform="ios" src="www/res/screen/ios/Defaultiphone.png" width="320" />
     </platform>-->
-    <!--<platform name="wp8">
+  <!--<platform name="wp8">
         <icon height="99" platform="wp8" src="www/res/icon/wp8/ApplicationIcon.png" width="99" />
         <icon height="159" platform="wp8" src="www/res/icon/wp8/Background.png" width="159" />
         <splash height="1280" platform="wp8" src="www/res/screen/wp8/screen-portrait.jpg" width="768" />
     </platform>-->
-    <!--<platform name="windows">
+  <!--<platform name="windows">
         <icon height="150" platform="windows" src="www/res/icon/windows/Square150x150Logo.scale-100.png" width="150" />
         <icon height="30" platform="windows" src="www/res/icon/windows/Square30x30Logo.scale-100.png" width="30" />
         <icon height="50" platform="windows" src="www/res/icon/windows/StoreLogo.scale-100.png" width="50" />
@@ -127,7 +139,7 @@
         <icon height="360" platform="windows" src="www/res/icon/windows/Wide310x150Logo.scale-240.png" width="744" />
         <splash height="1920" platform="windows" src="www/res/screen/windows/SplashScreenPhone.scale-240.png" width="1152" />
     </platform>-->
-    <!--<access origin="*" />
+  <!--<access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
     <allow-intent href="tel:*" />
