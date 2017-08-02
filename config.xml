@@ -27,7 +27,7 @@
   <preference name="DisallowOverscroll" value="true" />
   <preference name="android-minSdkVersion" value="14" />
 
-  <engines>
+  <!--<engines>
     <engine name="cordova" version=">=1.7.0" />
     <engine name="cordova-android" version=">=1.8.0" />
     <engine name="cordova-ios" version=">=1.7.1" />
@@ -45,7 +45,7 @@
   </config-file>
   <js-module src="www/barcodescanner.js" name="barcodescanner">
     <clobbers target="plugins.barcodeScanner" />
-  </js-module>
+  </js-module>-->
   <!--<plugin name="cordova-plugin-battery-status" source="npm" spec="1.1.1" />
     <plugin name="cordova-plugin-camera" source="npm" spec="2.1.1" />
     <plugin name="cordova-plugin-media-capture" source="npm" spec="1.2.0" />
