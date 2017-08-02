@@ -81,9 +81,9 @@
             <!-- Top Navbar-->
             <div class="navbar">
                 <div class="navbar-inner">
-                    <!--<div class="left">
+                    <div class="left">
                         <a href="#" class="open-panel link icon-only"> <i class="f7-icons text-blue-voith">bars</i> </a>
-                    </div>-->
+                    </div>
                     <div class="center">SYSDB MOBILE</div>
                     <div class="right"><em class="f7-icons logo-size">v_logo</em></div>
                 </div>
@@ -154,17 +154,17 @@
     <script>
         function scan() {
 
-            cordova.plugins.barcodeScanner.scan(
-               function (result) {
-                   alert("We got a barcode\n" +
-                         "Result: " + result.text + "\n" +
-                         "Format: " + result.format + "\n" +
-                         "Cancelled: " + result.cancelled);
-               },
-               function (error) {
-                   alert("Scanning failed: " + error);
-               }
-            );
+            //cordova.plugins.barcodeScanner.scan(
+            //   function (result) {
+            //       alert("We got a barcode\n" +
+            //             "Result: " + result.text + "\n" +
+            //             "Format: " + result.format + "\n" +
+            //             "Cancelled: " + result.cancelled);
+            //   },
+            //   function (error) {
+            //       alert("Scanning failed: " + error);
+            //   }
+            //);
         }
     </script>
 
